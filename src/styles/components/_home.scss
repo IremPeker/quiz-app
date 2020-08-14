@@ -61,27 +61,30 @@ $breakpoint-desktop: 1024px;
              }
 
             .play-button-container {
-                display: flex;
-                justify-content: center;
-                .play-button{
-                    width: 90px;
-                    cursor: pointer;
-                    color: white;
-                    border-radius: 15px;
-                    padding: 10px;
-                    margin-top: 20px;
 
-                    a {
-                        color: black;
-                        transition: 0.3s linear all;
-                        text-decoration: none;
-                        outline: none;
-                    }
+                ul {
+                    list-style-type: none;
 
-                    &:hover {
-                        background-color: darken($color: #e7e1e1, $amount: 10%);
+                    li {
+                        a.play-button{
+                            background-color: white;
+                            cursor: pointer;
+                            color: black;
+                            border-radius: 15px;
+                            padding: 10px;
+                            margin-top: 20px;
+                            transition: 0.3s linear all;
+                            text-decoration: none;
+                            outline: none;
+        
+                            &:hover {
+                                background-color: darken( #e7e1e1, 10%);
+                            }
+                        }
                     }
-                }
+                
+                
+            }
             }
         }
         

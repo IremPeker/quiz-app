@@ -1,14 +1,21 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Home from './Home';
+import { 
+  BrowserRouter as Router, 
+  Route, 
+  Switch 
+} from 'react-router-dom';
+import HomeContainer from './HomeContainer';
+import PlayContainer from './PlayContainer';
 import '../styles/App.scss';
 
-function App() {
+export default function App() {
   return (
     <Router>
-      <Route path='/' exact component={Home} />
+      <Switch>
+        <Route exact path="/"> <HomeContainer /> </Route>
+        <Route path="/play"> <PlayContainer /> </Route>
+      </Switch>
     </Router>
   );
 }
 
-export default App;

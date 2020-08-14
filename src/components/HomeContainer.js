@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import spontago from '../assets/spontago.png';
 
-const Home = () => {
+const HomeContainer = () => {
     return (
       <div id="home">
         <section>
@@ -12,11 +12,13 @@ const Home = () => {
                     <p>Duration of the game is 15 minutes</p>
                     <p>Each game has 15 questions</p>
                     <p>Each question has 3 options
-                        <img src={spontago} class="example-screenshot" alt="example screenshot"></img>
+                        <img src={spontago} className="example-screenshot" alt="example screenshot"></img>
                     </p>
                 </div>
                 <div className="play-button-container">
-                    <button className="play-button"><Link to="play">Play</Link></button>
+                    <ul>
+                        <li><Link className="play-button" to="/play">Play</Link></li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -24,4 +26,4 @@ const Home = () => {
     );
   };
   
-  export default Home;
+  export default HomeContainer;
