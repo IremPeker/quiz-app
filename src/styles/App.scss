@@ -1,5 +1,3 @@
-.app {
-    h1 {
-        color: blue;
-    }
-}
+@import './components/home';
+@import './base/base';
+@import './base/settings';
