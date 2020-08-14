@@ -1,4 +1,5 @@
 $breakpoint-tablet: 620px;
+$breakpoint-desktop: 1024px;
 
 #home {
     background-image: url('../../assets/olav-ahrens-rotne-jvBXiynINGE-unsplash.jpg');
@@ -27,13 +28,36 @@ $breakpoint-tablet: 620px;
                  text-align: center;
              }
 
-             ul {
+             .instructions {
                  margin-bottom: 10px;
+                 font-size: 10px;
+                 width: 130px;
+                 line-height: 20px;
 
                  .example-screenshot {
-                     height: 150px;
-                     width: auto;
+                     height: 75px;
+                     width: 130px;
+
+                     @media (min-width: $breakpoint-tablet) {
+                        height: 150px;
+                        width: 220px;
+                    }
+
+                    @media (min-width: $breakpoint-desktop) {
+                        width: 350px;
+                    }
                  }
+
+                 @media (min-width: $breakpoint-tablet) {
+                    font-size: 16px;
+                    width: 220px;
+                    line-height: 25px;
+                }
+
+                @media (min-width: $breakpoint-desktop) {
+                    width: 350px;
+                    line-height: 30px;
+                }
              }
 
             .play-button-container {
@@ -59,10 +83,6 @@ $breakpoint-tablet: 620px;
                     }
                 }
             }
-
-            @media (min-width: $breakpoint-tablet) {
-                
-              }
         }
         
     }
