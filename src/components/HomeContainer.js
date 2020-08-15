@@ -5,7 +5,7 @@ import spontago from '../assets/spontago.png';
 const HomeContainer = () => {
     return (
       <div id="home">
-        <section>
+        <section className="home-section">
             <div className="how-to">
                 <h1>Quiz Game</h1>
                 <div className="instructions">
