@@ -6,3 +6,19 @@
 body {
     font-family: 'Josefin Sans', sans-serif;
 }
+
+.toast-valid {
+    background-color: green;
+}
+
+.toast-invalid {
+    background-color: red;
+}
+
+.toast-valid, .toast-invalid {
+    border-radius: 5px;
+    top: auto !important;
+    right: auto !important;
+    bottom: 10%;
+    left:7%;
+  }
