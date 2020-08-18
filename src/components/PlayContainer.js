@@ -6,20 +6,27 @@ class PlayContainer extends React.Component {
   }
 
   render() {
+
+    //const data = this.props.allQuestions;
+    const current = this.props.currentQuestion;
+    const options = this.props.options;
+
+    console.log("options inside play.js", options, "current", current.question);
+    
       return (
         <div id="play">
           <section className="play-section">
             <div className="questions">
-                <h4>First question will come right here dynamically</h4>
+                <h4>{current.question}</h4>
                 <div className="options">
-                    <div className="options-left">
-                      <p className="option">something</p>
-                      <p className="option">something else</p>
-                    </div>
-                    <div className="options-right">
-                      <p className="option">anything</p>
-                      <p className="option">nothing</p>
-                    </div>
+                  <div className="options-left">
+                  <p className="option">{options[0]}</p>
+                  <p className="option">{options[1]}</p>
+                  </div>
+                  <div className="options-right">
+                  <p className="option">{options[2]}</p>
+                  <p className="option">{options[3]}</p>
+                  </div>
                 </div>
                 <div className="button-container">
                   <button>Previous</button>
@@ -28,10 +35,11 @@ class PlayContainer extends React.Component {
                 </div>
             </div>
           </section>
-        </div>
-        
+          </div>
       );
     }
+
+
     
 }
 

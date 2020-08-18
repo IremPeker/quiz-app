@@ -10,8 +10,8 @@ const HomeContainer = () => {
                 <h1>Quiz Game</h1>
                 <div className="instructions">
                     <p>Duration of the game is 15 minutes</p>
-                    <p>Each game has 15 questions</p>
-                    <p>Each question has 3 options
+                    <p>Each game has 10 questions</p>
+                    <p>Each question has 4 options
                         <img src={spontago} className="example-screenshot" alt="example screenshot"></img>
                     </p>
                 </div>
