@@ -20,12 +20,12 @@ class PlayContainer extends React.Component {
                 <h4>{current.question}</h4>
                 <div className="options">
                   <div className="options-left">
-                  <p className="option">{options[0]}</p>
-                  <p className="option">{options[1]}</p>
+                  <p className="option" onClick={this.props.handleClick}>{options[0]}</p>
+                  <p className="option" onClick={this.props.handleClick}>{options[1]}</p>
                   </div>
                   <div className="options-right">
-                  <p className="option">{options[2]}</p>
-                  <p className="option">{options[3]}</p>
+                  <p className="option" onClick={this.props.handleClick}>{options[2]}</p>
+                  <p className="option" onClick={this.props.handleClick}>{options[3]}</p>
                   </div>
                 </div>
                 <div className="button-container">

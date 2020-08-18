@@ -7,6 +7,7 @@ import {
 import HomeContainer from './HomeContainer';
 import PlayContainer from './PlayContainer';
 import '../styles/App.scss';
+import M from 'materialize-css';
 
 class App extends React.Component  {
 
@@ -20,7 +21,7 @@ class App extends React.Component  {
       previousQuestion: [],
       nextQuestion: [],
       options: [],
-      correctAnswer: [],
+      correctAnswer: "",
       currentQuestionIndex: 0,
       correctAnswers: 0,
       wrongAnswers: 0,
@@ -29,6 +30,8 @@ class App extends React.Component  {
     };
 
     this.fetchData = this.fetchData.bind(this);
+    this.correctAnswer = this.correctAnswer.bind(this);
+    this.wrongAnswer = this.wrongAnswer.bind(this);
   }
 
   async fetchData() {
@@ -49,24 +52,23 @@ class App extends React.Component  {
         const currentQuestion = allQuestions[this.state.currentQuestionIndex];
         const nextQuestion = allQuestions[this.state.currentQuestionIndex + 1];
         const previousQuestion = allQuestions[this.state.currentQuestionIndex -1];
-        const optionsArray = [];
-        const correctAnswerArray = [];
-
+        
         Object.entries(currentQuestion).map(el => {
       
           if(el[0]==="incorrect_answers") {
             //console.log("el is", el[1]);
-           optionsArray.push(el[1]); // el[1][0] gives the first el in array
-          } else if (el[0]==="correct_answer") {
+           this.state.options.push(el[1]); // el[1][0] gives the first el in array
+          }
+          if (el[0]==="correct_answer") {
             //console.log("el is", el[1]);
-           correctAnswerArray.push(el[1]); // el[1][0] gives the first el in array
+           this.state.correctAnswer = el[1]; // el[1][0] gives the first el in array
           }
         });
 
-        const concatOptions = optionsArray.concat(correctAnswerArray); 
+        const concatOptions = this.state.options.concat(this.state.correctAnswer); 
         const allOptions = [].concat.apply([], concatOptions);
 
-        //console.log("current option state in app.js",this.state.options, "correct answer", this.state.correctAnswer, "all options", allOptions);
+        console.log("current option state in app.js",this.state.options, "correct answer", this.state.correctAnswer, "all options", allOptions);
         this.setState({
           allQuestions, 
           numberOfQuestions,
@@ -94,6 +96,43 @@ class App extends React.Component  {
     this.fetchData();
   }
 
+  handleOptionClick = (e) => {
+    console.log("inner html",e.target.innerHTML, "correct answer",  this.state.correctAnswer);
+    
+    if(e.target.innerHTML === this.state.correctAnswer) {
+      this.correctAnswer();
+    } else {
+      this.wrongAnswer();
+    }
+  };
+
+  correctAnswer = () => {
+    M.toast({
+      html: 'Correct Answer!',
+      classes: 'toast-valid'
+    });
+
+    this.setState(prevState => ({
+      score: prevState.score + 1 ,
+      correctAnswers: prevState.correctAnswers + 1,
+      currentQuestionIndex: prevState.currentQuestionIndex + 1,
+      numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1
+    }))    
+  };
+
+  wrongAnswer = () => {
+    M.toast({
+      html: 'Wrong Answer!',
+      classes: 'toast-invalid'
+    });
+
+    this.setState(prevState => ({
+      wrongAnswers: prevState.wrongAnswers + 1 ,
+      currentQuestionIndex: prevState.currentQuestionIndex + 1,
+      numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1
+    }))    
+  };
+
   render() {
     return (
       <Router>
@@ -106,6 +145,7 @@ class App extends React.Component  {
           nextQuestion={this.state.nextQuestion}
           options={this.state.options}
           correctAnswer={this.state.correctAnswer}
+          handleClick={this.handleOptionClick}
           ></PlayContainer></Route>
         </Switch>
       </Router>
