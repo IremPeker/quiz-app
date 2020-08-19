@@ -7,7 +7,6 @@ class PlayContainer extends React.Component {
 
   render() {
 
-    //const data = this.props.allQuestions;
     const current = this.props.currentQuestion;
     const options = this.props.options;
 
@@ -37,10 +36,7 @@ class PlayContainer extends React.Component {
           </section>
           </div>
       );
-    }
-
-
-    
+    } 
 }
 
 export default PlayContainer;

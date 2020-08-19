@@ -2,10 +2,12 @@ import React from 'react';
 import { 
   BrowserRouter as Router, 
   Route, 
-  Switch 
+  Switch,
+  Redirect
 } from 'react-router-dom';
 import HomeContainer from './HomeContainer';
 import PlayContainer from './PlayContainer';
+import UrlErrorContainer from "./UrlErrorContainer";
 import '../styles/App.scss';
 import M from 'materialize-css';
 
@@ -36,8 +38,9 @@ class App extends React.Component  {
   }
 
   async fetchData() {
-    let url = 'https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple';
+    //let url = 'https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple';
     
+    let url='';
     try {
       const response = await fetch(url, {
         method: "get"
@@ -154,7 +157,10 @@ class App extends React.Component  {
       <Router>
         <Switch>
           <Route exact path="/"> <HomeContainer /> </Route>
-          <Route path="/play"> <PlayContainer 
+          {this.state.urlError ? (
+          <Route path="/error"> <UrlErrorContainer /> </Route>
+        ) : (
+          <Route path="/play"><PlayContainer 
           allQuestions={this.state.allQuestions}
           currentQuestion={this.state.currentQuestion}
           previousQuestion={this.state.previousQuestion}
@@ -165,6 +171,7 @@ class App extends React.Component  {
           numberOfAnsweredQuestions={this.state.numberOfAnsweredQuestions}
           handleClick={this.handleOptionClick}
           ></PlayContainer></Route>
+        )}
         </Switch>
       </Router>
     );

@@ -15,7 +15,7 @@ $breakpoint-desktop: 1024px;
   }
   
 
-#home, #play {
+#home, #play, #url-error {
     background-image: url('../../assets/olav-ahrens-rotne-jvBXiynINGE-unsplash.jpg');
     background-size: cover;
     background-position: center;
@@ -25,10 +25,10 @@ $breakpoint-desktop: 1024px;
     width: 100vw;
 }
 
-.home-section, .play-section {
+.home-section, .play-section, .url-error-section {
     background-color: rgba($color: #f0eaea91, $alpha: 0.7);
     height: 80%;
-    width: 40%;
+    width: 75%;
     padding: 10px;
     margin-top: 50px;
 }
@@ -46,38 +46,40 @@ $breakpoint-desktop: 1024px;
             flex-direction: column;
 
              h1 {
+                 font-size: 2,2rem;
                  margin-bottom: 10px;
                  text-align: center;
+
+                 @media (min-width: $breakpoint-tablet) {
+                    font-size: 3,2rem;
+                }
              }
 
              .instructions {
+                 text-align: center;
                  margin-bottom: 20px;
                  font-size: 10px;
-                 width: 130px;
+                 width: 165px;
                  line-height: 20px;
 
-                 .example-screenshot {
+                 .game-screenshot {
                      height: 75px;
                      width: 130px;
 
                      @media (min-width: $breakpoint-tablet) {
                         height: 150px;
-                        width: 220px;
-                    }
-
-                    @media (min-width: $breakpoint-desktop) {
-                        width: 350px;
+                        width: 300px;
                     }
                  }
 
                  @media (min-width: $breakpoint-tablet) {
                     font-size: 16px;
-                    width: 220px;
+                    width: 400px;
                     line-height: 25px;
                 }
 
                 @media (min-width: $breakpoint-desktop) {
-                    width: 350px;
+                    width: 500px;
                     line-height: 30px;
                 }
              }
@@ -186,3 +188,20 @@ $breakpoint-desktop: 1024px;
         }
     }
 }
+
+// URL ERROR SECTION **************************************************
+
+#url-error {
+    .url-error-section {
+        text-align: center;
+        .error-message {
+            padding: 25px;
+          }
+        
+          .fail-message {
+            height: 250px;
+            padding-left: 25px;
+          }
+    }
+}
+
