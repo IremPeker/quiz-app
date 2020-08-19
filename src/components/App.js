@@ -44,8 +44,6 @@ class App extends React.Component  {
       });
       const data = await response.json();
       const allQuestions = data.results;
-      //console.log(allQuestions);
-      
       const numberOfQuestions = data.results.length;
     
       if (numberOfQuestions > 0) {
@@ -57,19 +55,21 @@ class App extends React.Component  {
         Object.entries(currentQuestion).map(el => {
       
           if(el[0]==="incorrect_answers") {
-            //console.log("el is", el[1]);
-           this.state.options.push(el[1]); // el[1][0] gives the first el in array
+           this.state.options.push(el[1]); 
           }
           if (el[0]==="correct_answer") {
-            //console.log("el is", el[1]);
-           this.state.correctAnswer = el[1]; // el[1][0] gives the first el in array
+           this.state.correctAnswer = el[1]; 
           }
         });
 
         const concatOptions = this.state.options.concat(this.state.correctAnswer); 
         const allOptions = [].concat.apply([], concatOptions);
+        console.log("all options BEFORE shuffle", allOptions);
+        
+        this.shuffleArray(allOptions);
 
-        console.log("current option state in app.js",this.state.options, "correct answer", this.state.correctAnswer, "all options", allOptions);
+        console.log("all options AFTER shuffle", allOptions);
+
         this.setState({
           allQuestions, 
           numberOfQuestions,
@@ -96,6 +96,13 @@ class App extends React.Component  {
   componentDidMount() {
     this.fetchData();
   }
+
+  shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+  };
 
   handleOptionClick = (e) => {
     console.log("inner html",e.target.innerHTML, "correct answer",  this.state.correctAnswer);
@@ -165,3 +172,4 @@ class App extends React.Component  {
 }
 
 export default App;
+
