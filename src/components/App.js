@@ -30,6 +30,7 @@ class App extends React.Component  {
     };
 
     this.fetchData = this.fetchData.bind(this);
+    this.handleOptionClick = this.handleOptionClick.bind(this);
     this.correctAnswer = this.correctAnswer.bind(this);
     this.wrongAnswer = this.wrongAnswer.bind(this);
   }
@@ -109,28 +110,36 @@ class App extends React.Component  {
   correctAnswer = () => {
     M.toast({
       html: 'Correct Answer!',
-      classes: 'toast-valid'
+      classes: 'toast-valid',
+      displayLength:1300
     });
 
     this.setState(prevState => ({
       score: prevState.score + 1 ,
       correctAnswers: prevState.correctAnswers + 1,
       currentQuestionIndex: prevState.currentQuestionIndex + 1,
-      numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1
-    }))    
+      numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
+      options: []
+    }), ()=> {
+      this.fetchData(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion); // the callback to executed after prevState in the setState method
+    });  
   };
 
   wrongAnswer = () => {
     M.toast({
       html: 'Wrong Answer!',
-      classes: 'toast-invalid'
+      classes: 'toast-invalid',
+      displayLength:1300
     });
 
     this.setState(prevState => ({
       wrongAnswers: prevState.wrongAnswers + 1 ,
       currentQuestionIndex: prevState.currentQuestionIndex + 1,
-      numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1
-    }))    
+      numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
+      options: []
+    }), ()=> {
+      this.fetchData(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion);
+    });    
   };
 
   render() {
@@ -145,6 +154,8 @@ class App extends React.Component  {
           nextQuestion={this.state.nextQuestion}
           options={this.state.options}
           correctAnswer={this.state.correctAnswer}
+          currentQuestionIndex={this.state.currentQuestionIndex}
+          numberOfAnsweredQuestions={this.state.numberOfAnsweredQuestions}
           handleClick={this.handleOptionClick}
           ></PlayContainer></Route>
         </Switch>
