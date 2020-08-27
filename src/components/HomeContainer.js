@@ -2,7 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import game from '../assets/game.png';
 
-const HomeContainer = () => {
+class HomeContainer extends React.Component {
+    constructor(props) {
+      super(props);
+    }
+  
+    render() {
+    const isUrlError = this.props.isUrlError;
+    console.log("isUrlError from home container", isUrlError);
+    
+    let button;
+    if (isUrlError) {
+      button = <Link className="play-button" to="/error">Play</Link>;
+    } else {
+      button = <Link className="play-button" to="/play">Play</Link>;
+    }
     return (
       <div id="home">
         <section className="home-section">
@@ -17,13 +31,14 @@ const HomeContainer = () => {
                 </div>
                 <div className="play-button-container">
                     <ul>
-                        <li><Link className="play-button" to="/play">Play</Link></li>
+                        <li>{button}</li>
                     </ul>
                 </div>
             </div>
         </section>
       </div>
     );
+    }
   };
   
   export default HomeContainer;

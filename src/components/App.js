@@ -2,8 +2,7 @@ import React from 'react';
 import { 
   BrowserRouter as Router, 
   Route, 
-  Switch,
-  Redirect
+  Switch
 } from 'react-router-dom';
 import HomeContainer from './HomeContainer';
 import PlayContainer from './PlayContainer';
@@ -38,9 +37,9 @@ class App extends React.Component  {
   }
 
   async fetchData() {
-    //let url = 'https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple';
+    let url = 'https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple';
     
-    let url='';
+    //let url='';
     try {
       const response = await fetch(url, {
         method: "get"
@@ -156,10 +155,9 @@ class App extends React.Component  {
     return (
       <Router>
         <Switch>
-          <Route exact path="/"> <HomeContainer /> </Route>
-          {this.state.urlError ? (
-          <Route path="/error"> <UrlErrorContainer /> </Route>
-        ) : (
+          <Route exact path="/"> <HomeContainer
+          isUrlError={this.state.urlError}  
+          ></HomeContainer></Route>
           <Route path="/play"><PlayContainer 
           allQuestions={this.state.allQuestions}
           currentQuestion={this.state.currentQuestion}
@@ -171,7 +169,9 @@ class App extends React.Component  {
           numberOfAnsweredQuestions={this.state.numberOfAnsweredQuestions}
           handleClick={this.handleOptionClick}
           ></PlayContainer></Route>
-        )}
+          { this.state.urlError && 
+          <Route exact path="/error"> <UrlErrorContainer /> </Route>
+        }
         </Switch>
       </Router>
     );
@@ -180,3 +180,5 @@ class App extends React.Component  {
 
 export default App;
 
+// add options for different games
+// if currentQuestionIndex === numberOfAnsweredQuestions => quit

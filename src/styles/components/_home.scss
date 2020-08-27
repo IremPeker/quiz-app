@@ -198,10 +198,35 @@ $breakpoint-desktop: 1024px;
             padding: 25px;
           }
         
-          .fail-message {
-            height: 250px;
-            padding-left: 25px;
-          }
+        .fail-message {
+            height: 150px;
+            
+            @media (min-width: $breakpoint-tablet) {
+                height: 250px;
+            }
+        }
+        
+        .home-button-container {
+
+            margin-top: 10px;
+
+            ul {
+                list-style-type: none;
+
+                li {
+                    a.home-button{
+                        @include button-props();
+    
+                        &:hover {
+                            background-color: darken( #e7e1e1, 10%);
+                        }
+                    }
+                }
+            
+            
+        }
+
+        }
     }
 }
 

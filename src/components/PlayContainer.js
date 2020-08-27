@@ -9,8 +9,6 @@ class PlayContainer extends React.Component {
 
     const current = this.props.currentQuestion;
     const options = this.props.options;
-
-    console.log("options inside play.js", options, "current", current.question);
     
       return (
         <div id="play">
