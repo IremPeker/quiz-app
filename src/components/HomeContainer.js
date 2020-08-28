@@ -9,7 +9,6 @@ class HomeContainer extends React.Component {
   
     render() {
     const isUrlError = this.props.isUrlError;
-    console.log("isUrlError from home container", isUrlError);
     
     let button;
     if (isUrlError) {

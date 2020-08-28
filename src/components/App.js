@@ -31,9 +31,10 @@ class App extends React.Component  {
     };
 
     this.fetchData = this.fetchData.bind(this);
-    this.handleOptionClick = this.handleOptionClick.bind(this);
-    this.correctAnswer = this.correctAnswer.bind(this);
-    this.wrongAnswer = this.wrongAnswer.bind(this);
+    //this.displayQuestions = this.displayQuestions.bind(this);
+    //this.handleOptionClick = this.handleOptionClick.bind(this);
+    //this.correctAnswer = this.correctAnswer.bind(this);
+    //this.wrongAnswer = this.wrongAnswer.bind(this);
   }
 
   async fetchData() {
@@ -47,41 +48,19 @@ class App extends React.Component  {
       const data = await response.json();
       const allQuestions = data.results;
       const numberOfQuestions = data.results.length;
+
+      console.log("all =>", allQuestions);
+      
     
       if (numberOfQuestions > 0) {
         
-        const currentQuestion = allQuestions[this.state.currentQuestionIndex];
-        const nextQuestion = allQuestions[this.state.currentQuestionIndex + 1];
-        const previousQuestion = allQuestions[this.state.currentQuestionIndex -1];
-        
-        Object.entries(currentQuestion).map(el => {
-      
-          if(el[0]==="incorrect_answers") {
-           this.state.options.push(el[1]); 
-          }
-          if (el[0]==="correct_answer") {
-           this.state.correctAnswer = el[1]; 
-          }
-        });
-
-        const concatOptions = this.state.options.concat(this.state.correctAnswer); 
-        const allOptions = [].concat.apply([], concatOptions);
-        console.log("all options BEFORE shuffle", allOptions);
-        
-        this.shuffleArray(allOptions);
-
-        console.log("all options AFTER shuffle", allOptions);
-
         this.setState({
           allQuestions, 
           numberOfQuestions,
-          currentQuestion,
-          nextQuestion,
-          previousQuestion,
-          options:allOptions,
           urlError: false
-
         });
+
+        this.displayQuestions();
         
       } else {
         this.setState({
@@ -95,8 +74,51 @@ class App extends React.Component  {
     }
   }
 
+  displayQuestions = () => {
+    //this.fetchData();
+    const currentQuestion = this.state.allQuestions[this.state.currentQuestionIndex];
+    const nextQuestion = this.state.allQuestions[this.state.currentQuestionIndex + 1];
+    const previousQuestion = this.state.allQuestions[this.state.currentQuestionIndex -1];
+
+        // DELETE THIS
+        this.state.allQuestions.map(question => {
+          console.log("question:", question.question);
+          
+        })
+
+        console.log("current question", currentQuestion, "next question", nextQuestion, "previous question", previousQuestion)
+        
+        console.log("CURRENT QUESTION INDEX IS IN THE BEGINNING", this.state.currentQuestionIndex);
+
+    Object.entries(currentQuestion).map(el => {
+      
+      if(el[0]==="incorrect_answers") {
+        this.state.options.push(el[1]); 
+      }
+      if (el[0]==="correct_answer") {
+        this.state.correctAnswer = el[1]; 
+      }
+    });
+
+    const concatOptions = this.state.options.concat(this.state.correctAnswer); 
+    const allOptions = [].concat.apply([], concatOptions);
+        //console.log("all options BEFORE shuffle", allOptions);
+        
+    this.shuffleArray(allOptions);
+
+        //console.log("all options AFTER shuffle", allOptions);
+
+    this.setState({
+      currentQuestion,
+      nextQuestion,
+      previousQuestion,
+      options:allOptions
+    });
+  }
+
   componentDidMount() {
     this.fetchData();
+    //this.displayQuestions();
   }
 
   shuffleArray = (array) => {
@@ -107,7 +129,6 @@ class App extends React.Component  {
   };
 
   handleOptionClick = (e) => {
-    console.log("inner html",e.target.innerHTML, "correct answer",  this.state.correctAnswer);
     
     if(e.target.innerHTML === this.state.correctAnswer) {
       this.correctAnswer();
@@ -130,7 +151,7 @@ class App extends React.Component  {
       numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
       options: []
     }), ()=> {
-      this.fetchData(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion); // the callback to executed after prevState in the setState method
+      this.displayQuestions(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion); // the callback to executed after prevState in the setState method
     });  
   };
 
@@ -147,10 +168,39 @@ class App extends React.Component  {
       numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
       options: []
     }), ()=> {
-      this.fetchData(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion);
+      this.displayQuestions(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion);
     });    
   };
 
+  handleButtonClick = (e) => {
+
+    console.log("BUTTON IS", e.target.innerHTML);
+    
+
+    if((e.target.innerHTML === 'Next') && (this.state.nextQuestion !== undefined)) {
+      
+      this.setState(prevState => ({
+        currentQuestionIndex: prevState.currentQuestionIndex + 1
+      }), ()=> {
+        this.displayQuestions(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion);
+      });    
+
+      console.log("CURRENT QUESTION INDEX AFTER NEXT", this.state.currentQuestionIndex);
+        
+    }
+
+    if((e.target.innerHTML === 'Previous') && (this.state.previousQuestion !== undefined)) {
+      this.setState(prevState => ({
+        currentQuestionIndex: prevState.currentQuestionIndex - 1
+      }), ()=> {
+        this.displayQuestions(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion);
+      });    
+
+      console.log("CURRENT QUESTION INDEX AFTER PREVIOUS", this.state.currentQuestionIndex);
+    }
+  };
+
+  
   render() {
     return (
       <Router>
@@ -168,6 +218,7 @@ class App extends React.Component  {
           currentQuestionIndex={this.state.currentQuestionIndex}
           numberOfAnsweredQuestions={this.state.numberOfAnsweredQuestions}
           handleClick={this.handleOptionClick}
+          handleButtonClick={this.handleButtonClick}
           ></PlayContainer></Route>
           { this.state.urlError && 
           <Route exact path="/error"> <UrlErrorContainer /> </Route>
@@ -180,5 +231,3 @@ class App extends React.Component  {
 
 export default App;
 
-// add options for different games
-// if currentQuestionIndex === numberOfAnsweredQuestions => quit

@@ -26,9 +26,9 @@ class PlayContainer extends React.Component {
                   </div>
                 </div>
                 <div className="button-container">
-                  <button>Previous</button>
-                  <button>Next</button>
-                  <button>Quit</button>
+                  <button id="previous-button" onClick={this.props.handleButtonClick}>Previous</button>
+                  <button id="next-button" onClick={this.props.handleButtonClick}>Next</button>
+                  <button id="quit-button" onClick={this.props.handleButtonClick}>Quit</button>
                 </div>
             </div>
           </section>
