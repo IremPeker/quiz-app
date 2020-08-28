@@ -27,6 +27,8 @@ class App extends React.Component  {
       correctAnswers: 0,
       wrongAnswers: 0,
       score: 0,
+      previousButtonDisabled: false,
+      nextButtonDisabled: false,
       urlError: false
     };
 
@@ -71,6 +73,8 @@ class App extends React.Component  {
   }
 
   displayQuestions = () => {
+
+    console.log("########### DISPLAY QUESTIONS #############");
     const currentQuestion = this.state.allQuestions[this.state.currentQuestionIndex];
     const nextQuestion = this.state.allQuestions[this.state.currentQuestionIndex + 1];
     const previousQuestion = this.state.allQuestions[this.state.currentQuestionIndex -1];
@@ -91,8 +95,8 @@ class App extends React.Component  {
 
     const concatOptions = this.state.options.concat(this.state.correctAnswer); 
     const allOptions = [].concat.apply([], concatOptions);
-    this.shuffleArray(allOptions);
-
+    this.shuffleOptionsArray(allOptions);
+    
     this.setState({
       currentQuestion,
       nextQuestion,
@@ -105,7 +109,7 @@ class App extends React.Component  {
     this.fetchData();
   }
 
-  shuffleArray = (array) => {
+  shuffleOptionsArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
@@ -113,7 +117,6 @@ class App extends React.Component  {
   };
 
   handleOptionClick = (e) => {
-    
     if(e.target.innerHTML === this.state.correctAnswer) {
       this.correctAnswer();
     } else {
@@ -169,7 +172,8 @@ class App extends React.Component  {
 
     if(this.state.previousQuestion !== undefined) {
       this.setState(prevState => ({
-        currentQuestionIndex: prevState.currentQuestionIndex - 1
+        currentQuestionIndex: prevState.currentQuestionIndex - 1,
+        options: []
       }), ()=> {
         this.displayQuestions(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion);
       });    
@@ -183,7 +187,8 @@ class App extends React.Component  {
     if(this.state.nextQuestion !== undefined) {
       
       this.setState(prevState => ({
-        currentQuestionIndex: prevState.currentQuestionIndex + 1
+        currentQuestionIndex: prevState.currentQuestionIndex + 1,
+        options: []
       }), ()=> {
         this.displayQuestions(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion);
       });    
@@ -219,6 +224,28 @@ class App extends React.Component  {
 
       default:
         break;
+    }
+  }
+
+  handleButtonDisable = () => {
+    if(this.state.previousQuestion === undefined || this.state.currentQuestionIndex === 0) {
+      this.setState({
+        previousButtonDisabled: true
+      })
+    } else {
+      this.setState({
+        previousButtonDisabled: false
+      })
+    }
+
+    if(this.state.nextQuestion === undefined || this.state.currentQuestionIndex + 1 === this.state.numberOfQuestions) {
+      this.setState({
+        nextButtonDisabled: true
+      })
+    } else {
+      this.setState({
+        nextButtonDisabled: false
+      })
     }
   }
   
