@@ -31,10 +31,6 @@ class App extends React.Component  {
     };
 
     this.fetchData = this.fetchData.bind(this);
-    //this.displayQuestions = this.displayQuestions.bind(this);
-    //this.handleOptionClick = this.handleOptionClick.bind(this);
-    //this.correctAnswer = this.correctAnswer.bind(this);
-    //this.wrongAnswer = this.wrongAnswer.bind(this);
   }
 
   async fetchData() {
@@ -75,16 +71,9 @@ class App extends React.Component  {
   }
 
   displayQuestions = () => {
-    //this.fetchData();
     const currentQuestion = this.state.allQuestions[this.state.currentQuestionIndex];
     const nextQuestion = this.state.allQuestions[this.state.currentQuestionIndex + 1];
     const previousQuestion = this.state.allQuestions[this.state.currentQuestionIndex -1];
-
-        // DELETE THIS
-        this.state.allQuestions.map(question => {
-          console.log("question:", question.question);
-          
-        })
 
         console.log("current question", currentQuestion, "next question", nextQuestion, "previous question", previousQuestion)
         
@@ -102,11 +91,7 @@ class App extends React.Component  {
 
     const concatOptions = this.state.options.concat(this.state.correctAnswer); 
     const allOptions = [].concat.apply([], concatOptions);
-        //console.log("all options BEFORE shuffle", allOptions);
-        
     this.shuffleArray(allOptions);
-
-        //console.log("all options AFTER shuffle", allOptions);
 
     this.setState({
       currentQuestion,
@@ -118,7 +103,6 @@ class App extends React.Component  {
 
   componentDidMount() {
     this.fetchData();
-    //this.displayQuestions();
   }
 
   shuffleArray = (array) => {
@@ -144,6 +128,8 @@ class App extends React.Component  {
       displayLength:1300
     });
 
+    console.log("correct answers before", this.state.correctAnswers);
+
     this.setState(prevState => ({
       score: prevState.score + 1 ,
       correctAnswers: prevState.correctAnswers + 1,
@@ -153,6 +139,8 @@ class App extends React.Component  {
     }), ()=> {
       this.displayQuestions(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion); // the callback to executed after prevState in the setState method
     });  
+
+    console.log("correct answers after", this.state.correctAnswers);
   };
 
   wrongAnswer = () => {
@@ -162,6 +150,9 @@ class App extends React.Component  {
       displayLength:1300
     });
 
+    console.log("wrong answers before", this.state.wrongAnswers);
+    
+
     this.setState(prevState => ({
       wrongAnswers: prevState.wrongAnswers + 1 ,
       currentQuestionIndex: prevState.currentQuestionIndex + 1,
@@ -169,15 +160,27 @@ class App extends React.Component  {
       options: []
     }), ()=> {
       this.displayQuestions(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion);
-    });    
+    });  
+    
+    console.log("wrong answers after", this.state.wrongAnswers);
   };
 
-  handleButtonClick = (e) => {
+  handlePreviousButtonClick = () => {
 
-    console.log("BUTTON IS", e.target.innerHTML);
-    
+    if(this.state.previousQuestion !== undefined) {
+      this.setState(prevState => ({
+        currentQuestionIndex: prevState.currentQuestionIndex - 1
+      }), ()=> {
+        this.displayQuestions(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion);
+      });    
 
-    if((e.target.innerHTML === 'Next') && (this.state.nextQuestion !== undefined)) {
+      console.log("CURRENT QUESTION INDEX AFTER PREVIOUS", this.state.currentQuestionIndex);
+    }
+  };
+
+  handleNextButtonClick = () => {
+
+    if(this.state.nextQuestion !== undefined) {
       
       this.setState(prevState => ({
         currentQuestionIndex: prevState.currentQuestionIndex + 1
@@ -189,17 +192,35 @@ class App extends React.Component  {
         
     }
 
-    if((e.target.innerHTML === 'Previous') && (this.state.previousQuestion !== undefined)) {
-      this.setState(prevState => ({
-        currentQuestionIndex: prevState.currentQuestionIndex - 1
-      }), ()=> {
-        this.displayQuestions(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion);
-      });    
+  };
 
-      console.log("CURRENT QUESTION INDEX AFTER PREVIOUS", this.state.currentQuestionIndex);
+  handleQuitButtonClick = () => {
+    //const { history } = this.context;
+
+    if(window.confirm("Are you sure?")){
+      // THIS IS NOT WORKING
+      this.context.history.push("/");
     }
   };
 
+  handleButtonClick = (e) => {
+    switch(e.target.id) {
+      case 'previous-button':
+        this.handlePreviousButtonClick();
+        break;
+
+      case 'next-button':
+        this.handleNextButtonClick();
+        break;
+
+      case 'quit-button':
+        this.handleQuitButtonClick();
+        break;
+
+      default:
+        break;
+    }
+  }
   
   render() {
     return (
