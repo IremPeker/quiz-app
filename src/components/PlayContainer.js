@@ -9,6 +9,8 @@ class PlayContainer extends React.Component {
 
     const current = this.props.currentQuestion;
     const options = this.props.options;
+    const isPreviousDisabled = this.props.previousButtonDisabled;
+    const isNextDisabled = this.props.nextButtonDisabled;
     
       return (
         <div id="play">
@@ -26,8 +28,18 @@ class PlayContainer extends React.Component {
                   </div>
                 </div>
                 <div className="button-container">
-                  <button id="previous-button" onClick={this.props.handleButtonClick}>Previous</button>
-                  <button id="next-button" onClick={this.props.handleButtonClick}>Next</button>
+                  <button 
+                  id="previous-button" 
+                  className={isPreviousDisabled ? 'disabled-button' : ''}
+                  onClick={this.props.handleButtonClick}>
+                    Previous
+                    </button>
+                  <button 
+                  id="next-button"
+                  className={isNextDisabled ? 'disabled-button' : ''} 
+                  onClick={this.props.handleButtonClick}>
+                    Next
+                    </button>
                   <button id="quit-button" onClick={this.props.handleButtonClick}>Quit</button>
                 </div>
             </div>

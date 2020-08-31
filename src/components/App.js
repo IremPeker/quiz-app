@@ -102,6 +102,8 @@ class App extends React.Component  {
       nextQuestion,
       previousQuestion,
       options:allOptions
+    }, ()=> {
+      this.handleButtonDisable();
     });
   }
 
@@ -200,11 +202,8 @@ class App extends React.Component  {
   };
 
   handleQuitButtonClick = () => {
-    //const { history } = this.context;
-
     if(window.confirm("Are you sure?")){
-      // THIS IS NOT WORKING
-      this.context.history.push("/");
+      window.location.href="/";
     }
   };
 
@@ -267,6 +266,8 @@ class App extends React.Component  {
           numberOfAnsweredQuestions={this.state.numberOfAnsweredQuestions}
           handleClick={this.handleOptionClick}
           handleButtonClick={this.handleButtonClick}
+          previousButtonDisabled={this.state.previousButtonDisabled}
+          nextButtonDisabled={this.state.nextButtonDisabled}
           ></PlayContainer></Route>
           { this.state.urlError && 
           <Route exact path="/error"> <UrlErrorContainer /> </Route>
@@ -278,4 +279,5 @@ class App extends React.Component  {
 }
 
 export default App;
+
 
