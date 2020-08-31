@@ -8,11 +8,11 @@ body {
 }
 
 .toast-valid {
-    background-color: green;
+    background-color: green !important;
 }
 
 .toast-invalid {
-    background-color: red;
+    background-color: red !important;
 }
 
 .toast-valid, .toast-invalid {
