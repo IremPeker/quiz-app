@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import HomeContainer from './HomeContainer';
 import PlayContainer from './PlayContainer';
+import ScoreContainer from './ScoreContainer';
 import UrlErrorContainer from "./UrlErrorContainer";
 import '../styles/App.scss';
 import M from 'materialize-css';
@@ -142,7 +143,11 @@ class App extends React.Component  {
       numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
       options: []
     }), ()=> {
-      this.displayQuestions(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion); // the callback to executed after prevState in the setState method
+      if(this.state.nextQuestion === undefined) {
+        this.endQuiz();
+      } else {
+        this.displayQuestions(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion);
+      }
     });  
 
     console.log("correct answers after", this.state.correctAnswers);
@@ -164,7 +169,11 @@ class App extends React.Component  {
       numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
       options: []
     }), ()=> {
-      this.displayQuestions(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion);
+      if(this.state.nextQuestion === undefined) {
+        this.endQuiz();
+      } else {
+        this.displayQuestions(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion);
+      }
     });  
     
     console.log("wrong answers after", this.state.wrongAnswers);
@@ -247,6 +256,20 @@ class App extends React.Component  {
       })
     }
   }
+
+  endQuiz = () => {
+    const playerStatistics = {
+      score: this.state.score,
+      numberOfQuestions: this.state.numberOfQuestions,
+      numberOfAnsweredQuestions: this.state.numberOfAnsweredQuestions,
+      correctAnswers: this.state.correctAnswers,
+      wrongAnswers: this.state.wrongAnswers
+    }
+
+    console.log("player stats", playerStatistics);
+    window.location.href="/score";
+    
+  }
   
   render() {
     return (
@@ -254,8 +277,10 @@ class App extends React.Component  {
         <Switch>
           <Route exact path="/"> <HomeContainer
           isUrlError={this.state.urlError}  
-          ></HomeContainer></Route>
-          <Route path="/play"><PlayContainer 
+          ></HomeContainer>
+          </Route>
+          <Route path="/play">
+            <PlayContainer 
           allQuestions={this.state.allQuestions}
           currentQuestion={this.state.currentQuestion}
           previousQuestion={this.state.previousQuestion}
@@ -264,14 +289,24 @@ class App extends React.Component  {
           correctAnswer={this.state.correctAnswer}
           currentQuestionIndex={this.state.currentQuestionIndex}
           numberOfAnsweredQuestions={this.state.numberOfAnsweredQuestions}
+          numberOfQuestions={this.state.numberOfQuestions}
           handleClick={this.handleOptionClick}
           handleButtonClick={this.handleButtonClick}
           previousButtonDisabled={this.state.previousButtonDisabled}
           nextButtonDisabled={this.state.nextButtonDisabled}
-          ></PlayContainer></Route>
+          ></PlayContainer>
+          </Route>
           { this.state.urlError && 
           <Route exact path="/error"> <UrlErrorContainer /> </Route>
-        }
+          }
+          <Route path="/score"> 
+          <ScoreContainer
+           score={this.state.score}
+           numberOfCorrectAnswers={this.state.correctAnswers}
+           numberOfWrongAnswers={this.state.wrongAnswers}
+          >
+          </ScoreContainer>
+          </Route>
         </Switch>
       </Router>
     );

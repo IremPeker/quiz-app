@@ -26,6 +26,7 @@ class HomeContainer extends React.Component {
                     <p>Each question has 4 options</p>
                     <img src={game} className="game-screenshot" alt="example screenshot"></img>
                     <p>Take your time! There is no time pressure :)</p>
+                    <p>Select a quiz type</p>
                     <p>Press "Play" and Enjoy!</p>
                 </div>
                 <div className="play-button-container">

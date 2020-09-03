@@ -15,7 +15,7 @@ $breakpoint-desktop: 1024px;
   }
   
 
-#home, #play, #url-error {
+#home, #play, #url-error, #score {
     background-image: url('../../assets/olav-ahrens-rotne-jvBXiynINGE-unsplash.jpg');
     background-size: cover;
     background-position: center;
@@ -25,7 +25,7 @@ $breakpoint-desktop: 1024px;
     width: 100vw;
 }
 
-.home-section, .play-section, .url-error-section {
+.home-section, .play-section, .url-error-section, .score-section {
     background-color: rgba($color: #f0eaea91, $alpha: 0.7);
     height: 80%;
     width: 75%;
@@ -119,6 +119,14 @@ $breakpoint-desktop: 1024px;
 
         .questions {
 
+            display: flex;
+            flex-direction: column;
+
+            .fraction {
+                text-align: center;
+                order: -1;
+            }
+
             h4 {
                 margin-bottom: 40px;
                 text-align: center;
@@ -172,17 +180,23 @@ $breakpoint-desktop: 1024px;
             }
 
             .button-container {
-                display: flex;
-                flex-direction: row;
-                justify-content: space-evenly;
+                
+                ul {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-evenly;
+                    list-style-type: none;
 
-                button {
-                    @include button-props();
+                    li {
 
-                    &:hover {
-                        background-color: darken( #61caf3, 10%);
+                        a {
+                            @include button-props();
+
+                            &:hover {
+                                background-color: darken( #61caf3, 10%);
+                            }
+                        }
                     }
-
                 }
 
                 .disabled-button {
@@ -232,6 +246,34 @@ $breakpoint-desktop: 1024px;
             
             
         }
+
+        }
+    }
+}
+
+// SCORE SECTION **************************************************
+
+#score {
+    .score-section {
+        
+        .home-button-container {
+
+            margin-top: 10px;
+
+            ul {
+                list-style-type: none;
+
+                li {
+                    a.home-button{
+                        @include button-props();
+    
+                        &:hover {
+                            background-color: darken( #e7e1e1, 10%);
+                        }
+                    }
+                }
+            
+            }
 
         }
     }
