@@ -1,18 +1,13 @@
-import React from 'react';
-import { 
-  BrowserRouter as Router, 
-  Route, 
-  Switch
-} from 'react-router-dom';
-import HomeContainer from './HomeContainer';
-import PlayContainer from './PlayContainer';
-import ScoreContainer from './ScoreContainer';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import HomeContainer from "./HomeContainer";
+import PlayContainer from "./PlayContainer";
+import ScoreContainer from "./ScoreContainer";
 import UrlErrorContainer from "./UrlErrorContainer";
-import '../styles/App.scss';
-import M from 'materialize-css';
+import "../styles/App.scss";
+import M from "materialize-css";
 
-class App extends React.Component  {
-
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,85 +23,107 @@ class App extends React.Component  {
       correctAnswers: 0,
       wrongAnswers: 0,
       score: 0,
+      quizEnded: false,
       previousButtonDisabled: false,
       nextButtonDisabled: false,
-      urlError: false
+      urlError: false,
     };
 
     this.fetchData = this.fetchData.bind(this);
   }
 
   async fetchData() {
-    let url = 'https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple';
-    
+    let url =
+      "https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple";
+
     //let url='';
     try {
       const response = await fetch(url, {
-        method: "get"
+        method: "get",
       });
       const data = await response.json();
       const allQuestions = data.results;
       const numberOfQuestions = data.results.length;
 
-      console.log("all =>", allQuestions);
-      
-    
-      if (numberOfQuestions > 0) {
-        
+      console.log(
+        "in the beginning.....all =>",
+        allQuestions,
+        "state is",
+        this.state
+      );
+
+      if (numberOfQuestions > 0 && this.state.numberOfAnsweredQuestions === 0) {
+        console.log(
+          "inside fetchdata if...number of questions are",
+          numberOfQuestions
+        );
+
         this.setState({
-          allQuestions, 
+          allQuestions,
           numberOfQuestions,
-          urlError: false
+          urlError: false,
         });
 
         this.displayQuestions();
-        
+      } else if (
+        numberOfQuestions > 0 &&
+        this.state.numberOfAnsweredQuestions > 0
+      ) {
+        console.log("inside else if and about to start again...");
+
+        this.startAgain();
       } else {
+        console.log(
+          "inside fetchdata else...number of questions are",
+          numberOfQuestions
+        );
         this.setState({
-          urlError: true
+          urlError: true,
         });
       }
     } catch (error) {
       this.setState({
-        urlError: true
+        urlError: true,
       });
     }
   }
 
   displayQuestions = () => {
+    const currentQuestion = this.state.allQuestions[
+      this.state.currentQuestionIndex
+    ];
+    const nextQuestion = this.state.allQuestions[
+      this.state.currentQuestionIndex + 1
+    ];
+    const previousQuestion = this.state.allQuestions[
+      this.state.currentQuestionIndex - 1
+    ];
 
-    console.log("########### DISPLAY QUESTIONS #############");
-    const currentQuestion = this.state.allQuestions[this.state.currentQuestionIndex];
-    const nextQuestion = this.state.allQuestions[this.state.currentQuestionIndex + 1];
-    const previousQuestion = this.state.allQuestions[this.state.currentQuestionIndex -1];
-
-        console.log("current question", currentQuestion, "next question", nextQuestion, "previous question", previousQuestion)
-        
-        console.log("CURRENT QUESTION INDEX IS IN THE BEGINNING", this.state.currentQuestionIndex);
-
-    Object.entries(currentQuestion).map(el => {
-      
-      if(el[0]==="incorrect_answers") {
-        this.state.options.push(el[1]); 
+    Object.entries(currentQuestion).map((el) => {
+      if (el[0] === "incorrect_answers") {
+        this.state.options.push(el[1]);
       }
-      if (el[0]==="correct_answer") {
-        this.state.correctAnswer = el[1]; 
+      if (el[0] === "correct_answer") {
+        this.state.correctAnswer = el[1];
       }
     });
 
-    const concatOptions = this.state.options.concat(this.state.correctAnswer); 
+    const concatOptions = this.state.options.concat(this.state.correctAnswer);
     const allOptions = [].concat.apply([], concatOptions);
     this.shuffleOptionsArray(allOptions);
-    
-    this.setState({
-      currentQuestion,
-      nextQuestion,
-      previousQuestion,
-      options:allOptions
-    }, ()=> {
-      this.handleButtonDisable();
-    });
-  }
+
+    this.setState(
+      {
+        currentQuestion,
+        nextQuestion,
+        previousQuestion,
+        options: allOptions,
+      },
+      () => {
+        this.handleButtonDisable();
+      }
+    );
+  };
 
   componentDidMount() {
     this.fetchData();
@@ -114,13 +131,13 @@ class App extends React.Component  {
 
   shuffleOptionsArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
   };
 
   handleOptionClick = (e) => {
-    if(e.target.innerHTML === this.state.correctAnswer) {
+    if (e.target.innerHTML === this.state.correctAnswer) {
       this.correctAnswer();
     } else {
       this.wrongAnswer();
@@ -129,184 +146,223 @@ class App extends React.Component  {
 
   correctAnswer = () => {
     M.toast({
-      html: 'Correct Answer!',
-      classes: 'toast-valid',
-      displayLength:1300
+      html: "Correct Answer!",
+      classes: "toast-valid",
+      displayLength: 1300,
     });
 
-    console.log("correct answers before", this.state.correctAnswers);
-
-    this.setState(prevState => ({
-      score: prevState.score + 1 ,
-      correctAnswers: prevState.correctAnswers + 1,
-      currentQuestionIndex: prevState.currentQuestionIndex + 1,
-      numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
-      options: []
-    }), ()=> {
-      if(this.state.nextQuestion === undefined) {
-        this.endQuiz();
-      } else {
-        this.displayQuestions(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion);
+    this.setState(
+      (prevState) => ({
+        score: prevState.score + 1,
+        correctAnswers: prevState.correctAnswers + 1,
+        currentQuestionIndex: prevState.currentQuestionIndex + 1,
+        numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
+        options: [],
+      }),
+      () => {
+        if (this.state.nextQuestion === undefined) {
+          this.setState({
+            quizEnded: true,
+          });
+        } else {
+          this.displayQuestions(
+            this.state.allQuestions,
+            this.state.currentQuestion,
+            this.state.previousQuestion,
+            this.state.nextQuestion
+          );
+        }
       }
-    });  
-
-    console.log("correct answers after", this.state.correctAnswers);
+    );
   };
 
   wrongAnswer = () => {
     M.toast({
-      html: 'Wrong Answer!',
-      classes: 'toast-invalid',
-      displayLength:1300
+      html: "Wrong Answer!",
+      classes: "toast-invalid",
+      displayLength: 1300,
     });
 
-    console.log("wrong answers before", this.state.wrongAnswers);
-    
-
-    this.setState(prevState => ({
-      wrongAnswers: prevState.wrongAnswers + 1 ,
-      currentQuestionIndex: prevState.currentQuestionIndex + 1,
-      numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
-      options: []
-    }), ()=> {
-      if(this.state.nextQuestion === undefined) {
-        this.endQuiz();
-      } else {
-        this.displayQuestions(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion);
+    this.setState(
+      (prevState) => ({
+        wrongAnswers: prevState.wrongAnswers + 1,
+        currentQuestionIndex: prevState.currentQuestionIndex + 1,
+        numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
+        options: [],
+      }),
+      () => {
+        if (this.state.nextQuestion === undefined) {
+          this.setState({
+            quizEnded: true,
+          });
+        } else {
+          this.displayQuestions(
+            this.state.allQuestions,
+            this.state.currentQuestion,
+            this.state.previousQuestion,
+            this.state.nextQuestion
+          );
+        }
       }
-    });  
-    
-    console.log("wrong answers after", this.state.wrongAnswers);
+    );
   };
 
   handlePreviousButtonClick = () => {
-
-    if(this.state.previousQuestion !== undefined) {
-      this.setState(prevState => ({
-        currentQuestionIndex: prevState.currentQuestionIndex - 1,
-        options: []
-      }), ()=> {
-        this.displayQuestions(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion);
-      });    
-
-      console.log("CURRENT QUESTION INDEX AFTER PREVIOUS", this.state.currentQuestionIndex);
+    if (this.state.previousQuestion !== undefined) {
+      this.setState(
+        (prevState) => ({
+          currentQuestionIndex: prevState.currentQuestionIndex - 1,
+          options: [],
+        }),
+        () => {
+          this.displayQuestions(
+            this.state.allQuestions,
+            this.state.currentQuestion,
+            this.state.previousQuestion,
+            this.state.nextQuestion
+          );
+        }
+      );
     }
   };
 
   handleNextButtonClick = () => {
-
-    if(this.state.nextQuestion !== undefined) {
-      
-      this.setState(prevState => ({
-        currentQuestionIndex: prevState.currentQuestionIndex + 1,
-        options: []
-      }), ()=> {
-        this.displayQuestions(this.state.allQuestions, this.state.currentQuestion, this.state.previousQuestion, this.state.nextQuestion);
-      });    
-
-      console.log("CURRENT QUESTION INDEX AFTER NEXT", this.state.currentQuestionIndex);
-        
+    if (this.state.nextQuestion !== undefined) {
+      this.setState(
+        (prevState) => ({
+          currentQuestionIndex: prevState.currentQuestionIndex + 1,
+          options: [],
+        }),
+        () => {
+          this.displayQuestions(
+            this.state.allQuestions,
+            this.state.currentQuestion,
+            this.state.previousQuestion,
+            this.state.nextQuestion
+          );
+        }
+      );
     }
-
   };
 
   handleQuitButtonClick = () => {
-    if(window.confirm("Are you sure?")){
-      window.location.href="/";
+    if (window.confirm("Are you sure?")) {
+      window.location.href = "/";
     }
   };
 
   handleButtonClick = (e) => {
-    switch(e.target.id) {
-      case 'previous-button':
+    switch (e.target.id) {
+      case "previous-button":
         this.handlePreviousButtonClick();
         break;
 
-      case 'next-button':
+      case "next-button":
         this.handleNextButtonClick();
         break;
 
-      case 'quit-button':
+      case "quit-button":
         this.handleQuitButtonClick();
         break;
 
       default:
         break;
     }
-  }
+  };
 
   handleButtonDisable = () => {
-    if(this.state.previousQuestion === undefined || this.state.currentQuestionIndex === 0) {
+    if (
+      this.state.previousQuestion === undefined ||
+      this.state.currentQuestionIndex === 0
+    ) {
       this.setState({
-        previousButtonDisabled: true
-      })
+        previousButtonDisabled: true,
+      });
     } else {
       this.setState({
-        previousButtonDisabled: false
-      })
+        previousButtonDisabled: false,
+      });
     }
 
-    if(this.state.nextQuestion === undefined || this.state.currentQuestionIndex + 1 === this.state.numberOfQuestions) {
+    if (
+      this.state.nextQuestion === undefined ||
+      this.state.currentQuestionIndex + 1 === this.state.numberOfQuestions
+    ) {
       this.setState({
-        nextButtonDisabled: true
-      })
+        nextButtonDisabled: true,
+      });
     } else {
       this.setState({
-        nextButtonDisabled: false
-      })
+        nextButtonDisabled: false,
+      });
     }
-  }
+  };
 
-  endQuiz = () => {
-    const playerStatistics = {
-      score: this.state.score,
-      numberOfQuestions: this.state.numberOfQuestions,
-      numberOfAnsweredQuestions: this.state.numberOfAnsweredQuestions,
-      correctAnswers: this.state.correctAnswers,
-      wrongAnswers: this.state.wrongAnswers
-    }
+  startAgain = () => {
+    this.setState({
+      allQuestions: [],
+      numberOfQuestions: 0,
+      numberOfAnsweredQuestions: 0,
+      currentQuestion: [],
+      previousQuestion: [],
+      nextQuestion: [],
+      options: [],
+      correctAnswer: "",
+      currentQuestionIndex: 0,
+      correctAnswers: 0,
+      wrongAnswers: 0,
+      score: 0,
+      quizEnded: false,
+      previousButtonDisabled: false,
+      nextButtonDisabled: false,
+      urlError: false,
+    });
+    this.fetchData();
+  };
 
-    console.log("player stats", playerStatistics);
-    window.location.href="/score";
-    
-  }
-  
   render() {
     return (
       <Router>
         <Switch>
-          <Route exact path="/"> <HomeContainer
-          isUrlError={this.state.urlError}  
-          ></HomeContainer>
+          <Route exact path="/">
+            {" "}
+            <HomeContainer isUrlError={this.state.urlError}></HomeContainer>
           </Route>
           <Route path="/play">
-            <PlayContainer 
-          allQuestions={this.state.allQuestions}
-          currentQuestion={this.state.currentQuestion}
-          previousQuestion={this.state.previousQuestion}
-          nextQuestion={this.state.nextQuestion}
-          options={this.state.options}
-          correctAnswer={this.state.correctAnswer}
-          currentQuestionIndex={this.state.currentQuestionIndex}
-          numberOfAnsweredQuestions={this.state.numberOfAnsweredQuestions}
-          numberOfQuestions={this.state.numberOfQuestions}
-          handleClick={this.handleOptionClick}
-          handleButtonClick={this.handleButtonClick}
-          previousButtonDisabled={this.state.previousButtonDisabled}
-          nextButtonDisabled={this.state.nextButtonDisabled}
-          ></PlayContainer>
+            <PlayContainer
+              allQuestions={this.state.allQuestions}
+              currentQuestion={this.state.currentQuestion}
+              previousQuestion={this.state.previousQuestion}
+              nextQuestion={this.state.nextQuestion}
+              options={this.state.options}
+              correctAnswer={this.state.correctAnswer}
+              currentQuestionIndex={this.state.currentQuestionIndex}
+              numberOfAnsweredQuestions={this.state.numberOfAnsweredQuestions}
+              numberOfQuestions={this.state.numberOfQuestions}
+              handleClick={this.handleOptionClick}
+              handleButtonClick={this.handleButtonClick}
+              previousButtonDisabled={this.state.previousButtonDisabled}
+              nextButtonDisabled={this.state.nextButtonDisabled}
+              quizEnded={this.state.quizEnded}
+            ></PlayContainer>
           </Route>
-          { this.state.urlError && 
-          <Route exact path="/error"> <UrlErrorContainer /> </Route>
-          }
-          <Route path="/score"> 
-          <ScoreContainer
-           score={this.state.score}
-           numberOfCorrectAnswers={this.state.correctAnswers}
-           numberOfWrongAnswers={this.state.wrongAnswers}
-          >
-          </ScoreContainer>
+          <Route path="/score">
+            <ScoreContainer
+              fetchData={this.fetchData}
+              score={this.state.score}
+              numberOfQuestions={this.state.numberOfQuestions}
+              numberOfAnsweredQuestions={this.state.numberOfAnsweredQuestions}
+              correctAnswers={this.state.correctAnswers}
+              wrongAnswers={this.state.wrongAnswers}
+            ></ScoreContainer>
           </Route>
+
+          {this.state.urlError && (
+            <Route exact path="/error">
+              {" "}
+              <UrlErrorContainer />{" "}
+            </Route>
+          )}
         </Switch>
       </Router>
     );
@@ -314,5 +370,3 @@ class App extends React.Component  {
 }
 
 export default App;
-
-

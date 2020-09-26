@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 class ScoreContainer extends React.Component {
   constructor(props) {
@@ -7,25 +7,39 @@ class ScoreContainer extends React.Component {
   }
 
   render() {
-      const score = this.props.score;
-      const numberOfCorrectAnswers = this.props.numberOfCorrectAnswers;
-      const numberOfWrongAnswers = this.props.numberOfWrongAnswers;
-      return (
-        <div id="score">
-          <section className="score-section">
-            <h3>The Quiz is finished</h3>
-            <h4>Your score is {score}</h4>
-            <h3>You have answered {numberOfCorrectAnswers} questions correctly.</h3>
-            <h3>And {numberOfWrongAnswers} questions wrong</h3>
-            <div className="home-button-container">
-              <ul>
-                <li><Link className="home-button" to="/">Home Page</Link></li>
-              </ul>
-            </div>
-          </section>
+    console.log("inside score container render....");
+
+    const score = this.props.score;
+    const numberOfQuestions = this.props.numberOfQuestions;
+    const numberOfAnsweredQuestions = this.props.numberOfAnsweredQuestions;
+    const correctAnswers = this.props.correctAnswers;
+    const wrongAnswers = this.props.wrongAnswers;
+    return (
+      <div id="score">
+        <section className="score-section">
+          <h3>The Quiz is finished</h3>
+          <p>Your score is {score}</p>
+          <p>You have answered {correctAnswers} questions correctly.</p>
+          <p>And {wrongAnswers} questions wrong</p>
+          <div className="home-button-container">
+            <ul>
+              <li>
+                <Link
+                  className="home-button"
+                  to="/"
+                  onClick={() => {
+                    this.props.fetchData();
+                  }}
+                >
+                  Home Page
+                </Link>
+              </li>
+            </ul>
           </div>
-      );
-    } 
+        </section>
+      </div>
+    );
+  }
 }
 
 export default ScoreContainer;
