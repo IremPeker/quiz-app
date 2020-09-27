@@ -53,11 +53,6 @@ class App extends React.Component {
       );
 
       if (numberOfQuestions > 0 && this.state.numberOfAnsweredQuestions === 0) {
-        console.log(
-          "inside fetchdata if...number of questions are",
-          numberOfQuestions
-        );
-
         this.setState({
           allQuestions,
           numberOfQuestions,
@@ -69,14 +64,8 @@ class App extends React.Component {
         numberOfQuestions > 0 &&
         this.state.numberOfAnsweredQuestions > 0
       ) {
-        console.log("inside else if and about to start again...");
-
         this.startAgain();
       } else {
-        console.log(
-          "inside fetchdata else...number of questions are",
-          numberOfQuestions
-        );
         this.setState({
           urlError: true,
         });
@@ -350,8 +339,6 @@ class App extends React.Component {
             <ScoreContainer
               fetchData={this.fetchData}
               score={this.state.score}
-              numberOfQuestions={this.state.numberOfQuestions}
-              numberOfAnsweredQuestions={this.state.numberOfAnsweredQuestions}
               correctAnswers={this.state.correctAnswers}
               wrongAnswers={this.state.wrongAnswers}
             ></ScoreContainer>

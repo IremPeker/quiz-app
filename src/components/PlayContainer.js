@@ -30,7 +30,7 @@ class PlayContainer extends React.Component {
             </div>
           ) : (
             <div className="questions">
-              <h4>{current.question}</h4>
+              <h5>{current.question}</h5>
               <p className="fraction">
                 {currentQuestionIndex + 1}/{totalNumberOfQuestions}
               </p>

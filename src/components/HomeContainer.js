@@ -28,7 +28,7 @@ class HomeContainer extends React.Component {
       <div id="home">
         <section className="home-section">
           <div className="how-to">
-            <h1>Quiz Game</h1>
+            <h2>Quiz Game</h2>
             <div className="instructions">
               <p>Each game has 10 General Knowledge questions</p>
               <p>Each question has 4 options</p>

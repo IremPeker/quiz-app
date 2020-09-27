@@ -7,20 +7,16 @@ class ScoreContainer extends React.Component {
   }
 
   render() {
-    console.log("inside score container render....");
-
     const score = this.props.score;
-    const numberOfQuestions = this.props.numberOfQuestions;
-    const numberOfAnsweredQuestions = this.props.numberOfAnsweredQuestions;
     const correctAnswers = this.props.correctAnswers;
-    const wrongAnswers = this.props.wrongAnswers;
+    const wrongAnswers = 10 - correctAnswers;
     return (
       <div id="score">
         <section className="score-section">
-          <h3>The Quiz is finished</h3>
-          <p>Your score is {score}</p>
-          <p>You have answered {correctAnswers} questions correctly.</p>
-          <p>And {wrongAnswers} questions wrong</p>
+          <h3>Quiz is finished</h3>
+          <h5>Your score is {score}</h5>
+          <h5>You have answered {correctAnswers} questions correctly.</h5>
+          <h5>And {wrongAnswers} questions wrong</h5>
           <div className="home-button-container">
             <ul>
               <li>
