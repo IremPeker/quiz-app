@@ -36,7 +36,6 @@ class App extends React.Component {
     let url =
       "https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple";
 
-    //let url='';
     try {
       const response = await fetch(url, {
         method: "get",
@@ -44,13 +43,6 @@ class App extends React.Component {
       const data = await response.json();
       const allQuestions = data.results;
       const numberOfQuestions = data.results.length;
-
-      console.log(
-        "in the beginning.....all =>",
-        allQuestions,
-        "state is",
-        this.state
-      );
 
       if (numberOfQuestions > 0 && this.state.numberOfAnsweredQuestions === 0) {
         this.setState({
