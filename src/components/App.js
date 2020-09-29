@@ -303,7 +303,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
+      <Router basename={window.location.pathname || ""}>
         <Switch>
           <Route exact path="/">
             {" "}
