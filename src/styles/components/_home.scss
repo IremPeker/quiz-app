@@ -82,18 +82,17 @@ $breakpoint-desktop: 1024px;
           line-height: 30px;
         }
       }
+    }
+    .play-button-container {
+      ul {
+        list-style-type: none;
 
-      .play-button-container {
-        ul {
-          list-style-type: none;
+        li {
+          a.play-button {
+            @include button-props();
 
-          li {
-            a.play-button {
-              @include button-props();
-
-              &:hover {
-                background-color: darken(#e7e1e1, 10%);
-              }
+            &:hover {
+              background-color: darken(#e7e1e1, 10%);
             }
           }
         }

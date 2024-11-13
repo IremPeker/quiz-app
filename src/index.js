@@ -1,14 +1,43 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from '../src/components/App';
+import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import App from './components/App';
+import HomeContainer from './components/HomeContainer';
+import PlayContainer from './components/PlayContainer';
+import ScoreContainer from './components/ScoreContainer';
+import UrlErrorContainer from './components/UrlErrorContainer';
 import * as serviceWorker from './serviceWorker';
 import '../node_modules/materialize-css/dist/css/materialize.min.css';
 
-ReactDOM.render(
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        path: "/quiz-app",
+        element: <HomeContainer />,
+      },
+      {
+        path: "/play",
+        element: <PlayContainer />,
+      },
+      {
+        path: "score",
+        element: <ScoreContainer />,
+      },
+      {
+        path: "error",
+        element: <UrlErrorContainer />,
+      },
+    ]
+  },
+]);
+
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <RouterProvider router={router} />
+  </React.StrictMode>
 );
 
 // If you want your app to work offline and load faster, you can change
