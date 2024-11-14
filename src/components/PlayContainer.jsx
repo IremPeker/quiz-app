@@ -1,56 +1,48 @@
 import React, {useEffect, useState} from "react";
 import { useOutletContext } from 'react-router-dom';
+import { decodeEntities } from "../utils/stringUtils";
 import Score from "./Score";
 import EndGame from "./EndGame";
-import { SnackbarProvider, useSnackbar } from 'notistack';
+import { useSnackbar } from 'notistack';
 
 const PlayContainer = () => {
 
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
   const { allQuestions, score, setScore, correctAnswers, wrongAnswers, setCorrectAnswers, setWrongAnswers } = useOutletContext();
 
-  // const [previousQuestion, setPreviousQuestion] = useState([]);
-  // const [nextQuestion, setNextQuestion] = useState([]);
   const [currentOptions, setCurrentOptions] = useState([]);
   const [correctAnswer, setCorrectAnswer] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [numberOfAnsweredQuestions, setNumberOfAnsweredQuestions] = useState(0);
   const [numberOfQuestions, setNumberOfQuestions] = useState(0);
-  // const [previousButtonDisabled, setPreviousButtonDisabled] = useState(false);
   const [nextButtonDisabled, setNextButtonDisabled] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [endGame, setEndGame] = useState(false);
 
+  console.log("all questions", allQuestions);
+  
   useEffect(() => {
     if (allQuestions.length > 0) {
       const currentQuestion = allQuestions[currentQuestionIndex].question;
+      console.log("CURRENT QUESTION", allQuestions[currentQuestionIndex]);
+      
       setNumberOfQuestions(allQuestions.length);
       setCurrentQuestion(decodeEntities(currentQuestion));
 
       const incorrectAnswers = allQuestions[currentQuestionIndex].incorrect_answers; // array of incorrect answers
       const correctAnswer = allQuestions[currentQuestionIndex].correct_answer; // correct answer
       setCorrectAnswer(correctAnswer);
-      // const allAnswers = [...incorrectAnswers, correctAnswer];
-      // console.log("all answers are", allAnswers);
-      
       const randomIndex = Math.floor(Math.random() * incorrectAnswers.length + 1);
       const shuffledAnswers = incorrectAnswers.slice(0, randomIndex).concat(correctAnswer, incorrectAnswers.slice(randomIndex));
-      console.log("shuffled answers are", shuffledAnswers);
-      
       setCurrentOptions(shuffledAnswers.map((answer) => decodeEntities(answer)));
+      setNextButtonDisabled(currentQuestionIndex + 1 === numberOfQuestions);
      }
-  }, [allQuestions, currentQuestionIndex, endGame]);
-
-  const decodeEntities = (str) => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(str, 'text/html');
-    return doc.documentElement.textContent;
-  }
+     console.log("next button disabled?", nextButtonDisabled, "currentQuestionIndex", currentQuestionIndex, "numberOfQuestions", numberOfQuestions);
+  }, [allQuestions, currentQuestionIndex, endGame, nextButtonDisabled]);
 
   const handleOptionClick = (option) => {
-    console.log("option clicked, option is", option, "correct answer is", correctAnswer);
     setSelectedOption(option);
     if (option === correctAnswer) {
       setScore(score + 1);
@@ -64,25 +56,10 @@ const PlayContainer = () => {
     }
   };
 
-  const handleButtonClick = (buttonType) => {
-    console.log("handle button clikced, button type is", buttonType);
-    
-    // if (buttonType === "previous") {
-    //   setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
-    //   setCurrentQuestion(allQuestions[currentQuestionIndex - 1].question);
-    //   setNextButtonDisabled(false);
-    //   // setPreviousButtonDisabled(currentQuestionIndex === 0);
-    // } else {
-    //   setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-    //   setCurrentQuestion(allQuestions[currentQuestionIndex + 1].question);
-    //   // setPreviousButtonDisabled(false);
-    //   setSelectedOption(null);
-    //   setNextButtonDisabled(currentQuestionIndex === numberOfQuestions - 1);
-    // } 
+  const handleButtonClick = () => {
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-    setCurrentQuestion(allQuestions[currentQuestionIndex + 1].question);
+    setCurrentQuestion(allQuestions[currentQuestionIndex].question);
     setSelectedOption(null);
-    setNextButtonDisabled(currentQuestionIndex === numberOfQuestions - 1);
   }
     
   return (
@@ -118,24 +95,13 @@ const PlayContainer = () => {
             })}
           </div>
           <div className="button-container">
-              {/* <button
-                id="previous-button"
-                className={previousButtonDisabled ? "disabled-button" : ""}
-                onClick={() => handleButtonClick("previous")}
-              >
-                Previous
-              </button> */}
             <button
               id="next-button"
-              // className={nextButtonDisabled ? "disabled-button" : ""}
               disabled={nextButtonDisabled}
-              onClick={() => handleButtonClick("next")}
+              onClick={() => handleButtonClick()}
             >
               Next
             </button>
-            {/* <div className="play-button-container">
-              <a href="/score" className="play-button">Quit</a>
-            </div> */}
             <button
               id="quit-button"
               onClick={() => setEndGame(true)}

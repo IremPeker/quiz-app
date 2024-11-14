@@ -15,6 +15,14 @@ $breakpoint-desktop: 1024px;
   transition: $button-transition;
   text-decoration: none;
   outline: none;
+
+  button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 }
 
 @mixin flex-center {
@@ -52,7 +60,7 @@ $breakpoint-desktop: 1024px;
 .error-section,
 .score-section,
 .endGame-section {
-  background-color: rgba($color: #f0eaea91, $alpha: 0.7);
+  background-color: rgba($color: #f0eaea91, $alpha: 0.8);
   height: 90%;
   width: 75%;
   padding: 10px;
@@ -131,6 +139,7 @@ $breakpoint-desktop: 1024px;
         order: -1;
         font-size: 20px;
         font-weight: bold;
+        padding: 10px;
       }
 
       h5 {
@@ -146,7 +155,7 @@ $breakpoint-desktop: 1024px;
 
         @media (min-width: $breakpoint-tablet) {
           flex-direction: unset;
-          margin-bottom: 40px;
+          margin: 40px 0;
         }
 
         .option {
@@ -181,6 +190,7 @@ $breakpoint-desktop: 1024px;
 
         button {
           @include button-props();
+          width: 100px;
           margin: 5px;
 
           &:hover {
@@ -258,6 +268,11 @@ $breakpoint-desktop: 1024px;
     background-color: white;
     padding: 10px;
     margin: 10px;
+
+    p {
+      font-size: 20px;
+      font-weight: 600;
+    }
   }
 
   .score-correct {
