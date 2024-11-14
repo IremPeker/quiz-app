@@ -2,14 +2,16 @@ import React from "react";
 import { useOutletContext } from 'react-router-dom';
 
 const Score = () => {
-  const { score, correctAnswers, wrongAnswers } = useOutletContext();
+  const { correctAnswers, wrongAnswers } = useOutletContext();
   return (
     <div className="score-container">
-      <div>
-        Correct Answers: {correctAnswers}
+      <div className="score-correct">
+        <p>Correct Answers:</p> 
+        <p className="score-correct-number">{correctAnswers}</p>
       </div>
-      <div>
-        Wrong Answers: {wrongAnswers}
+      <div className="score-wrong">
+        <p>Wrong Answers:</p>
+        <p className="score-wrong-number">{wrongAnswers}</p>
       </div>
     </div>
   )

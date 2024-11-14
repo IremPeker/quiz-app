@@ -23,10 +23,7 @@ const App = () => {
     }
   }, [allQuestions.length]);
 
-  console.log("inside app.js, correct answers is", correctAnswers, "wrong answers is", wrongAnswers, "score is", score);
-  
-
-
+ 
   const correctAnswer = () => {
   //   M.toast({
   //     html: "Correct Answer!",

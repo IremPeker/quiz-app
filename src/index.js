@@ -23,10 +23,10 @@ const router = createBrowserRouter([
         path: "play",
         element: <PlayContainer />,
       },
-      {
-        path: "score",
-        element: <EndGame />,
-      },
+      // {
+      //   path: "score",
+      //   element: <EndGame />,
+      // },
     ],
   },
 ]);
