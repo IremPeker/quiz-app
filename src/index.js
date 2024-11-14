@@ -13,24 +13,21 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <UrlErrorContainer />,
     children: [
       {
-        path: "/quiz-app",
+        index: true,
         element: <HomeContainer />,
       },
       {
-        path: "/play",
+        path: "play",
         element: <PlayContainer />,
       },
       {
         path: "score",
         element: <ScoreContainer />,
       },
-      {
-        path: "error",
-        element: <UrlErrorContainer />,
-      },
-    ]
+    ],
   },
 ]);
 

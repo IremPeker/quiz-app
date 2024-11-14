@@ -1,4 +1,4 @@
-$button-color: white;
+$button-color: rgba(26, 37, 79, 0.595);
 $button-transition: 0.3s linear all;
 $breakpoint-tablet: 620px;
 $breakpoint-desktop: 1024px;
@@ -6,7 +6,7 @@ $breakpoint-desktop: 1024px;
 @mixin button-props {
   background-color: $button-color;
   cursor: pointer;
-  color: black;
+  color: white;
   border-radius: 15px;
   padding: 10px;
   transition: $button-transition;
@@ -42,60 +42,56 @@ $breakpoint-desktop: 1024px;
 
 #home {
   .home-section {
-    .how-to {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
-      h2 {
-        font-size: 2, 2rem;
-        margin-bottom: 10px;
-        text-align: center;
+    h2 {
+      font-size: 2, 2rem;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .instructions {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 17px;
+      width: 165px;
+      line-height: 20px;
+
+      p {
+        font-size: 20px;
+        font-weight: 800;
       }
 
-      .instructions {
-        text-align: center;
-        margin-bottom: 20px;
-        font-size: 17px;
-        width: 165px;
-        line-height: 20px;
-
-        .game-screenshot {
-          height: 75px;
-          width: 130px;
-
-          @media (min-width: $breakpoint-tablet) {
-            height: 150px;
-            width: 300px;
-          }
-        }
+      .game-screenshot {
+        height: 75px;
+        width: 130px;
 
         @media (min-width: $breakpoint-tablet) {
-          font-size: 16px;
-          width: 400px;
-          line-height: 25px;
-        }
-
-        @media (min-width: $breakpoint-desktop) {
-          width: 500px;
-          line-height: 30px;
+          height: 350px;
+          width: 570px;
         }
       }
+
+      @media (min-width: $breakpoint-tablet) {
+        font-size: 16px;
+        width: 400px;
+        line-height: 25px;
+      }
+
+      @media (min-width: $breakpoint-desktop) {
+        width: 500px;
+        line-height: 30px;
+      }
     }
-    .play-button-container {
-      ul {
-        list-style-type: none;
-
-        li {
-          a.play-button {
-            @include button-props();
-
-            &:hover {
-              background-color: darken(#e7e1e1, 10%);
-            }
-          }
-        }
+  }
+  .play-button-container {
+    .play-button {
+      @include button-props();
+      &:hover {
+        background-color: darken(#1b59cca7, 10%);
       }
     }
   }
@@ -119,7 +115,7 @@ $breakpoint-desktop: 1024px;
             @include button-props();
 
             &:hover {
-              background-color: darken(#e7e1e1, 10%);
+              background-color: darken(#1b59cca7, 10%);
             }
           }
         }
@@ -129,11 +125,13 @@ $breakpoint-desktop: 1024px;
     .questions {
       display: flex;
       flex-direction: column;
-      width: 100%;
+      padding: 50px;
 
       .fraction {
         text-align: center;
         order: -1;
+        font-size: 20px;
+        font-weight: bold;
       }
 
       h5 {
@@ -145,45 +143,30 @@ $breakpoint-desktop: 1024px;
       .options {
         display: flex;
         flex-direction: column;
+        justify-content: space-around;
 
         @media (min-width: $breakpoint-tablet) {
           flex-direction: unset;
           margin-bottom: 40px;
         }
 
-        .options-left,
-        .options-right {
-          display: inline-block;
+        .option {
+          width: 100%;
+          font-size: 15px;
+          border-radius: 15px;
+          background-color: chartreuse;
+          cursor: pointer;
+          margin: 5px;
+          padding: 5px;
+          transition: $button-transition;
+          text-align: center;
 
-          @media (min-width: $breakpoint-tablet) {
-            width: 50%;
+          &:hover {
+            background-color: darken(#65ad06, 10%);
           }
 
-          .option {
-            font-size: 15px;
-            border-radius: 15px;
-            background-color: chartreuse;
-            cursor: pointer;
-            margin: 1em auto;
-            transition: $button-transition;
-            text-align: center;
-            width: 75%;
-
-            &:hover {
-              background-color: darken(#65ad06, 10%);
-            }
-
-            @media (min-width: $breakpoint-tablet) {
-              font-size: 18px;
-            }
-          }
-        }
-
-        .options-right {
-          margin-bottom: 20px;
-
           @media (min-width: $breakpoint-tablet) {
-            margin-bottom: unset;
+            font-size: 18px;
           }
         }
       }
@@ -198,7 +181,7 @@ $breakpoint-desktop: 1024px;
           margin: 5px;
 
           &:hover {
-            background-color: darken(#61caf3, 10%);
+            background-color: darken(#1b59cca7, 10%);
           }
         }
 
@@ -217,7 +200,7 @@ $breakpoint-desktop: 1024px;
               @include button-props();
 
               &:hover {
-                background-color: darken(#61caf3, 10%);
+                background-color: darken(#1b59cca7, 10%);
               }
             }
           }
@@ -247,17 +230,11 @@ $breakpoint-desktop: 1024px;
     .home-button-container {
       margin-top: 10px;
 
-      ul {
-        list-style-type: none;
+      a.home-button {
+        @include button-props();
 
-        li {
-          a.home-button {
-            @include button-props();
-
-            &:hover {
-              background-color: darken(#e7e1e1, 10%);
-            }
-          }
+        &:hover {
+          background-color: darken(#1b59cca7, 10%);
         }
       }
     }
@@ -277,17 +254,11 @@ $breakpoint-desktop: 1024px;
     .home-button-container {
       margin-top: 65px;
 
-      ul {
-        list-style-type: none;
+      a.home-button {
+        @include button-props();
 
-        li {
-          a.home-button {
-            @include button-props();
-
-            &:hover {
-              background-color: darken(#e7e1e1, 10%);
-            }
-          }
+        &:hover {
+          background-color: darken(#1b59cca7, 10%);
         }
       }
     }
