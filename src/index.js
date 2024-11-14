@@ -4,10 +4,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from './components/App';
 import HomeContainer from './components/HomeContainer';
 import PlayContainer from './components/PlayContainer';
-import EndGame from './components/EndGame';
 import ErrorContainer from './components/ErrorContainer';
 import * as serviceWorker from './serviceWorker';
-import '../node_modules/materialize-css/dist/css/materialize.min.css';
 
 const router = createBrowserRouter([
   {
@@ -23,10 +21,6 @@ const router = createBrowserRouter([
         path: "play",
         element: <PlayContainer />,
       },
-      // {
-      //   path: "score",
-      //   element: <EndGame />,
-      // },
     ],
   },
 ]);

@@ -2,8 +2,11 @@ import React, {useEffect, useState} from "react";
 import { useOutletContext } from 'react-router-dom';
 import Score from "./Score";
 import EndGame from "./EndGame";
+import { SnackbarProvider, useSnackbar } from 'notistack';
 
 const PlayContainer = () => {
+
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const { allQuestions, score, setScore, correctAnswers, wrongAnswers, setCorrectAnswers, setWrongAnswers } = useOutletContext();
 
@@ -53,9 +56,11 @@ const PlayContainer = () => {
       setScore(score + 1);
       setCorrectAnswers(correctAnswers + 1);
       setNumberOfAnsweredQuestions(numberOfAnsweredQuestions + 1);
+      enqueueSnackbar('Correct Answer!', { variant: 'success' });
     } else {
       setWrongAnswers(wrongAnswers + 1);
       setNumberOfAnsweredQuestions(numberOfAnsweredQuestions + 1);
+      enqueueSnackbar('Wrong Answer!', { variant: 'error' });
     }
   };
 

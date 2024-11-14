@@ -197,12 +197,14 @@ $breakpoint-desktop: 1024px;
 #error {
   .error-section {
     @include flex-center();
+    flex-direction: column;
     .error-message {
       padding: 25px;
     }
 
     .fail-message {
       height: 150px;
+      padding: 10px;
 
       @media (min-width: $breakpoint-tablet) {
         height: 250px;
