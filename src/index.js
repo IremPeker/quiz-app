@@ -4,8 +4,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from './components/App';
 import HomeContainer from './components/HomeContainer';
 import PlayContainer from './components/PlayContainer';
-import ScoreContainer from './components/ScoreContainer';
-import UrlErrorContainer from './components/UrlErrorContainer';
+import EndGame from './components/EndGame';
+import ErrorContainer from './components/ErrorContainer';
 import * as serviceWorker from './serviceWorker';
 import '../node_modules/materialize-css/dist/css/materialize.min.css';
 
@@ -13,7 +13,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <UrlErrorContainer />,
+    errorElement: <ErrorContainer />,
     children: [
       {
         index: true,
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
       },
       {
         path: "score",
-        element: <ScoreContainer />,
+        element: <EndGame />,
       },
     ],
   },

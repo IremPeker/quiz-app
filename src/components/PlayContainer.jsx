@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import { Link } from "react-router-dom";
 import { useOutletContext } from 'react-router-dom';
+import Score from "./Score";
 
 const PlayContainer = () => {
 
@@ -17,11 +17,13 @@ const PlayContainer = () => {
   const [previousButtonDisabled, setPreviousButtonDisabled] = useState(false);
   const [nextButtonDisabled, setNextButtonDisabled] = useState(false);
 
+  const [selectedOption, setSelectedOption] = useState(null);
+
   useEffect(() => {
     if (allQuestions.length > 0) {
       const currentQuestion = allQuestions[currentQuestionIndex].question;
       setNumberOfQuestions(allQuestions.length);
-      setCurrentQuestion(currentQuestion);
+      setCurrentQuestion(decodeEntities(currentQuestion));
 
       const incorrectAnswers = allQuestions[currentQuestionIndex].incorrect_answers; // array of incorrect answers
       const correctAnswer = allQuestions[currentQuestionIndex].correct_answer; // correct answer
@@ -29,13 +31,19 @@ const PlayContainer = () => {
       const allAnswers = [...incorrectAnswers, correctAnswer];
       const randomIndex = Math.floor(Math.random() * allAnswers.length);
       const shuffledAnswers = allAnswers.slice(0, randomIndex).concat(correctAnswer, allAnswers.slice(randomIndex));
-      setCurrentOptions(shuffledAnswers);
+      setCurrentOptions(shuffledAnswers.map((answer) => decodeEntities(answer)));
      }
   }, [allQuestions, currentQuestionIndex]);
-  
+
+  const decodeEntities = (str) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(str, 'text/html');
+    return doc.documentElement.textContent;
+  }
+
   const handleOptionClick = (option) => {
     console.log("option clicked, option is", option, "correct answer is", correctAnswer);
-    
+    setSelectedOption(option);
     if (option === correctAnswer) {
       setScore(score + 1);
       setCorrectAnswers(correctAnswers + 1);
@@ -58,49 +66,60 @@ const PlayContainer = () => {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
       setCurrentQuestion(allQuestions[currentQuestionIndex + 1].question);
       setPreviousButtonDisabled(false);
+      setSelectedOption(null);
       setNextButtonDisabled(currentQuestionIndex === numberOfQuestions - 1);
     } 
   }
     
   return (
-  <div id="play">
-    <div className="play-section">
-        <div className="questions">
-          <h2>{currentQuestion}</h2>
-          <p className="fraction">
-            {currentQuestionIndex + 1}/{numberOfQuestions}
-          </p>
-          <div className="options">
-            {currentOptions.map((option, index) => {
-              return (
-                <p className="option" key={index} onClick={() => handleOptionClick(option)}>
-                  {option}
-                </p>
-              );
-            })}
-          </div>
-          <div className="button-container">
-            <button
-              id="previous-button"
-              className={previousButtonDisabled ? "disabled-button" : ""}
-              onClick={() => handleButtonClick("previous")}
-            >
-              Previous
-            </button>
-            <button
-              id="next-button"
-              className={nextButtonDisabled ? "disabled-button" : ""}
-              onClick={() => handleButtonClick("next")}
-            >
-              Next
-            </button>
-            <div className="play-button-container">
-              <a href="/score" class="play-button">Quit</a>
+  
+      <div id="play">
+        
+        <div className="play-section">
+        <Score />
+          <div className="questions">
+            <h2>{currentQuestion}</h2>
+            <p className="fraction">
+              {currentQuestionIndex + 1}/{numberOfQuestions}
+            </p>
+            <div className="options">
+              {currentOptions.map((option, index) => {
+                const decodedOption = decodeEntities(option);
+                return (
+                  <button
+                    key={index}
+                    onClick={() => handleOptionClick(option)}
+                    className={selectedOption && selectedOption === decodedOption ? 'option not-clickable' : 'option'}
+                    disabled={selectedOption && selectedOption !== decodedOption}
+                  >
+                    {decodedOption}
+                  </button>
+                );
+              })}
+            </div>
+            <div className="button-container">
+              {/* <button
+                id="previous-button"
+                className={previousButtonDisabled ? "disabled-button" : ""}
+                onClick={() => handleButtonClick("previous")}
+              >
+                Previous
+              </button> */}
+              <button
+                id="next-button"
+                className={nextButtonDisabled ? "disabled-button" : ""}
+                onClick={() => handleButtonClick("next")}
+              >
+                Next
+              </button>
+              <div className="play-button-container">
+                <a href="/score" className="play-button">Quit</a>
+              </div>
             </div>
           </div>
-        </div>
+      </div>
     </div>
-  </div>);
+);
 };
 
 export default PlayContainer;

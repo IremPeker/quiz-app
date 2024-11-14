@@ -1,9 +1,12 @@
 import React from "react";
 import { useOutletContext } from 'react-router-dom';
 
-const ScoreContainer = () => {
+const EndGame = () => {
 
   const { score, correctAnswers, wrongAnswers } = useOutletContext();
+
+    console.log("inside end game, score is", score, "correct answers is", correctAnswers, "wrong answers is", wrongAnswers);
+    
 
     return (
       <div id="score">
@@ -13,11 +16,11 @@ const ScoreContainer = () => {
           <h5>You have answered {correctAnswers} questions correctly.</h5>
           <h5>And {wrongAnswers} questions wrong</h5>
           <div className="home-button-container">
-            <a href="/" class="home-button">Go Back Home</a>
+            <a href="/" className="home-button">Go Back Home</a>
           </div>
         </div>
       </div>
     );
 }
 
-export default ScoreContainer;
+export default EndGame;

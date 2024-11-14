@@ -169,6 +169,11 @@ $breakpoint-desktop: 1024px;
             font-size: 18px;
           }
         }
+
+        .not-clickable {
+          pointer-events: none;
+          opacity: 1;
+        }
       }
 
       .button-container {
