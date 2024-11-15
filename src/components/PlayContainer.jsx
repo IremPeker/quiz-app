@@ -1,23 +1,22 @@
-import React, {useEffect, useState} from "react";
-import { useOutletContext } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import { decodeEntities } from "../utils/stringUtils";
 import Score from "./Score";
 import EndGame from "./EndGame";
 import PulseLoader from "react-spinners/PulseLoader";
-import { useSnackbar } from 'notistack';
+import { useSnackbar } from "notistack";
 
 const PlayContainer = () => {
-
   const { enqueueSnackbar } = useSnackbar();
 
-  const { 
-    allQuestions, 
-    score, 
-    setScore, 
-    correctAnswers, 
-    wrongAnswers, 
-    setCorrectAnswers, 
-    setWrongAnswers 
+  const {
+    allQuestions,
+    score,
+    setScore,
+    correctAnswers,
+    wrongAnswers,
+    setCorrectAnswers,
+    setWrongAnswers,
   } = useOutletContext();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -35,17 +34,24 @@ const PlayContainer = () => {
       setIsLoading(false);
 
       const currentQuestion = allQuestions[currentQuestionIndex].question;
-     
+
       setNumberOfQuestions(allQuestions.length);
       setCurrentQuestion(decodeEntities(currentQuestion));
 
-      const incorrectAnswers = allQuestions[currentQuestionIndex].incorrect_answers; // array of incorrect answers
-      const correctAnswer = allQuestions[currentQuestionIndex].correct_answer; // correct answer
+      const incorrectAnswers =
+        allQuestions[currentQuestionIndex].incorrect_answers;
+      const correctAnswer = allQuestions[currentQuestionIndex].correct_answer;
       setCorrectAnswer(correctAnswer);
-      const randomIndex = Math.floor(Math.random() * incorrectAnswers.length + 1);
-      const shuffledAnswers = incorrectAnswers.slice(0, randomIndex).concat(correctAnswer, incorrectAnswers.slice(randomIndex));
-      setCurrentOptions(shuffledAnswers.map((answer) => decodeEntities(answer)));
-     }
+      const randomIndex = Math.floor(
+        Math.random() * incorrectAnswers.length + 1
+      );
+      const shuffledAnswers = incorrectAnswers
+        .slice(0, randomIndex)
+        .concat(correctAnswer, incorrectAnswers.slice(randomIndex));
+      setCurrentOptions(
+        shuffledAnswers.map((answer) => decodeEntities(answer))
+      );
+    }
   }, [allQuestions, currentQuestionIndex, endGame]);
 
   const handleOptionClick = (option) => {
@@ -54,11 +60,11 @@ const PlayContainer = () => {
       setScore(score + 1);
       setCorrectAnswers(correctAnswers + 1);
       setNumberOfAnsweredQuestions(numberOfAnsweredQuestions + 1);
-      enqueueSnackbar('Correct Answer!', { variant: 'success' });
+      enqueueSnackbar("Correct Answer!", { variant: "success" });
     } else {
       setWrongAnswers(wrongAnswers + 1);
       setNumberOfAnsweredQuestions(numberOfAnsweredQuestions + 1);
-      enqueueSnackbar('Wrong Answer!', { variant: 'error' });
+      enqueueSnackbar("Wrong Answer!", { variant: "error" });
     }
   };
 
@@ -66,23 +72,21 @@ const PlayContainer = () => {
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     setCurrentQuestion(allQuestions[currentQuestionIndex].question);
     setSelectedOption(null);
-  }
-    
-  return (
-    isLoading ?
-      <div id="loader" className="loader-container">
-        <PulseLoader color="#ffff" size={50} />
-      </div>
-      :
-    endGame ?
-      <EndGame 
-        score={score} 
-        correctAnswers={correctAnswers} 
-        wrongAnswers={wrongAnswers} 
-        numberOfQuestions={numberOfQuestions}
-      /> 
-      :
-      <div id="play">
+  };
+
+  return isLoading ? (
+    <div id="loader" className="loader-container">
+      <PulseLoader color="#ffff" size={50} />
+    </div>
+  ) : endGame ? (
+    <EndGame
+      score={score}
+      correctAnswers={correctAnswers}
+      wrongAnswers={wrongAnswers}
+      numberOfQuestions={numberOfQuestions}
+    />
+  ) : (
+    <div id="play">
       <div className="play-section">
         <Score />
         <div className="questions">
@@ -97,9 +101,12 @@ const PlayContainer = () => {
                 <button
                   key={index}
                   onClick={() => handleOptionClick(option)}
-                  className={selectedOption && selectedOption === decodedOption ? 'option not-clickable' : 'option'}
-                  disabled={selectedOption && selectedOption !== decodedOption}
-                >
+                  className={
+                    selectedOption && selectedOption === decodedOption
+                      ? "option not-clickable"
+                      : "option"
+                  }
+                  disabled={selectedOption && selectedOption !== decodedOption}>
                   {decodedOption}
                 </button>
               );
@@ -109,14 +116,10 @@ const PlayContainer = () => {
             <button
               id="next-button"
               disabled={currentQuestionIndex + 1 === numberOfQuestions}
-              onClick={() => handleButtonClick()}
-            >
+              onClick={() => handleButtonClick()}>
               Next
             </button>
-            <button
-              id="quit-button"
-              onClick={() => setEndGame(true)}
-            >
+            <button id="quit-button" onClick={() => setEndGame(true)}>
               End Game
             </button>
           </div>
@@ -128,8 +131,6 @@ const PlayContainer = () => {
 
 export default PlayContainer;
 
-
 // things to do
 // add breakpoints fix styles for tablet and mobile
-// add context api
-// add the option to chosse the hardship level of the questions
+// add tests

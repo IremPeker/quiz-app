@@ -1,12 +1,12 @@
 import React from "react";
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext } from "react-router-dom";
 
 const Score = () => {
   const { correctAnswers, wrongAnswers } = useOutletContext();
   return (
     <div className="score-container">
       <div className="score-correct">
-        <p>Correct Answers:</p> 
+        <p>Correct Answers:</p>
         <p className="score-correct-number">{correctAnswers}</p>
       </div>
       <div className="score-wrong">
@@ -14,7 +14,7 @@ const Score = () => {
         <p className="score-wrong-number">{wrongAnswers}</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Score;

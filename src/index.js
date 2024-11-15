@@ -1,11 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import App from './components/App';
-import HomeContainer from './components/HomeContainer';
-import PlayContainer from './components/PlayContainer';
-import ErrorContainer from './components/ErrorContainer';
-import * as serviceWorker from './serviceWorker';
+import App from "./components/App";
+import HomeContainer from "./components/HomeContainer";
+import PlayContainer from "./components/PlayContainer";
+import ErrorContainer from "./components/ErrorContainer";
+import * as serviceWorker from "./serviceWorker";
 
 const router = createBrowserRouter([
   {
