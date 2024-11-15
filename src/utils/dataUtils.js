@@ -1,6 +1,5 @@
-export const fetchData = async () => {
-  const url =
-    "https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple";
+export const fetchData = async (category, difficulty) => {
+  const url = `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`;
 
   try {
     const response = await fetch(url);

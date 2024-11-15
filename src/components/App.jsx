@@ -12,8 +12,11 @@ const App = () => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    const category = getRandomCategory();
+    const difficulty = getRandomDifficulty();
+
     if (allQuestions.length === 0) {
-      fetchData()
+      fetchData(category, difficulty)
         .then((data) => {
           setAllQuestions(data.results);
         })
@@ -22,6 +25,17 @@ const App = () => {
         });
     }
   }, [allQuestions.length]);
+
+  const getRandomCategory = () => {
+    const min = 9;
+    const max = 32;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+
+  const getRandomDifficulty = () => {
+    const difficulties = ["easy", "medium", "hard"];
+    return difficulties[Math.floor(Math.random() * difficulties.length)];
+  };
 
   return (
     <>

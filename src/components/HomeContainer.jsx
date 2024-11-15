@@ -8,7 +8,10 @@ const HomeContainer = () => {
         <h1>Quiz Game</h1>
         <div className="instructions">
           <p>
-            Each game has 10 General Knowledge questions.
+            Each game has 10 questions.
+            <br /> The category of question can vary from General Knowledge to
+            Films, Musics and even Anime Charachters.
+            <br /> The difficulty can be easy, medium or hard.
             <br /> Each question has 4 options. The questions look like this:{" "}
           </p>
           <img
