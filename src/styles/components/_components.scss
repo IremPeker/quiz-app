@@ -22,10 +22,6 @@ $breakpoint-desktop: 1024px;
   transition: $button-transition;
   text-decoration: none;
   outline: none;
-
-  button:disabled {
-    @include disabled-props();
-  }
 }
 
 @mixin flex-center {
@@ -46,6 +42,7 @@ $breakpoint-desktop: 1024px;
 
 #home,
 #play,
+#loader,
 #error,
 #score,
 #end-game {
@@ -127,6 +124,14 @@ $breakpoint-desktop: 1024px;
 
 // PLAY CONTAINER **************************************************
 
+// LOADER
+
+.loader-container {
+  @include flex-center();
+  height: 100vh;
+  width: 100vw;
+}
+
 #play {
   .play-section {
     @include flex-center();
@@ -203,6 +208,10 @@ $breakpoint-desktop: 1024px;
           &:hover {
             background-color: darken($button-hover-background-color, 10%);
           }
+        }
+
+        button:disabled {
+          @include disabled-props();
         }
       }
     }

@@ -3,26 +3,37 @@ import { useOutletContext } from 'react-router-dom';
 import { decodeEntities } from "../utils/stringUtils";
 import Score from "./Score";
 import EndGame from "./EndGame";
+import PulseLoader from "react-spinners/PulseLoader";
 import { useSnackbar } from 'notistack';
 
 const PlayContainer = () => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const { allQuestions, score, setScore, correctAnswers, wrongAnswers, setCorrectAnswers, setWrongAnswers } = useOutletContext();
+  const { 
+    allQuestions, 
+    score, 
+    setScore, 
+    correctAnswers, 
+    wrongAnswers, 
+    setCorrectAnswers, 
+    setWrongAnswers 
+  } = useOutletContext();
 
+  const [isLoading, setIsLoading] = useState(true);
   const [currentOptions, setCurrentOptions] = useState([]);
   const [correctAnswer, setCorrectAnswer] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [numberOfAnsweredQuestions, setNumberOfAnsweredQuestions] = useState(0);
   const [numberOfQuestions, setNumberOfQuestions] = useState(0);
-  const [nextButtonDisabled, setNextButtonDisabled] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [endGame, setEndGame] = useState(false);
 
   useEffect(() => {
     if (allQuestions.length > 0 && !endGame) {
+      setIsLoading(false);
+
       const currentQuestion = allQuestions[currentQuestionIndex].question;
      
       setNumberOfQuestions(allQuestions.length);
@@ -52,16 +63,17 @@ const PlayContainer = () => {
   };
 
   const handleButtonClick = () => {
-    if (currentQuestionIndex + 1 === numberOfQuestions) {
-      setEndGame(true);
-    }
-    
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     setCurrentQuestion(allQuestions[currentQuestionIndex].question);
     setSelectedOption(null);
   }
     
   return (
+    isLoading ?
+      <div id="loader" className="loader-container">
+        <PulseLoader color="#ffff" size={50} />
+      </div>
+      :
     endGame ?
       <EndGame 
         score={score} 
@@ -96,16 +108,16 @@ const PlayContainer = () => {
           <div className="button-container">
             <button
               id="next-button"
-              disabled={nextButtonDisabled}
+              disabled={currentQuestionIndex + 1 === numberOfQuestions}
               onClick={() => handleButtonClick()}
             >
-              {currentQuestionIndex + 1 === numberOfQuestions ? "End Game" : "Next"}
+              Next
             </button>
             <button
               id="quit-button"
               onClick={() => setEndGame(true)}
             >
-              Quit
+              End Game
             </button>
           </div>
         </div>
