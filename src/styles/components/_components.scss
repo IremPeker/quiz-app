@@ -6,6 +6,13 @@ $green-hover: #65ad06;
 $breakpoint-tablet: 620px;
 $breakpoint-desktop: 1024px;
 
+@mixin disabled-props {
+  background-color: #cccccc;
+  color: #666666;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
 @mixin button-props {
   background-color: $button-color;
   cursor: pointer;
@@ -17,11 +24,7 @@ $breakpoint-desktop: 1024px;
   outline: none;
 
   button:disabled {
-    background-color: #cccccc;
-    color: #666666;
-    pointer-events: none;
-    cursor: not-allowed;
-    opacity: 0.5;
+    @include disabled-props();
   }
 }
 
@@ -182,6 +185,10 @@ $breakpoint-desktop: 1024px;
           pointer-events: none;
           opacity: 1;
         }
+
+        .option:disabled {
+          @include disabled-props();
+        }
       }
 
       .button-container {
@@ -241,6 +248,19 @@ $breakpoint-desktop: 1024px;
   .endGame-section {
     @include flex-center();
     flex-direction: column;
+
+    p {
+      font-size: 20px;
+      padding: 20px;
+    }
+
+    .green {
+      color: $green;
+    }
+
+    .red {
+      color: red;
+    }
 
     .home-button-container {
       margin-top: 65px;

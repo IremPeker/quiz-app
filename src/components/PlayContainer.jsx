@@ -21,13 +21,10 @@ const PlayContainer = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [endGame, setEndGame] = useState(false);
 
-  console.log("all questions", allQuestions);
-  
   useEffect(() => {
-    if (allQuestions.length > 0) {
+    if (allQuestions.length > 0 && !endGame) {
       const currentQuestion = allQuestions[currentQuestionIndex].question;
-      console.log("CURRENT QUESTION", allQuestions[currentQuestionIndex]);
-      
+     
       setNumberOfQuestions(allQuestions.length);
       setCurrentQuestion(decodeEntities(currentQuestion));
 
@@ -37,10 +34,8 @@ const PlayContainer = () => {
       const randomIndex = Math.floor(Math.random() * incorrectAnswers.length + 1);
       const shuffledAnswers = incorrectAnswers.slice(0, randomIndex).concat(correctAnswer, incorrectAnswers.slice(randomIndex));
       setCurrentOptions(shuffledAnswers.map((answer) => decodeEntities(answer)));
-      setNextButtonDisabled(currentQuestionIndex + 1 === numberOfQuestions);
      }
-     console.log("next button disabled?", nextButtonDisabled, "currentQuestionIndex", currentQuestionIndex, "numberOfQuestions", numberOfQuestions);
-  }, [allQuestions, currentQuestionIndex, endGame, nextButtonDisabled]);
+  }, [allQuestions, currentQuestionIndex, endGame]);
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -57,6 +52,10 @@ const PlayContainer = () => {
   };
 
   const handleButtonClick = () => {
+    if (currentQuestionIndex + 1 === numberOfQuestions) {
+      setEndGame(true);
+    }
+    
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     setCurrentQuestion(allQuestions[currentQuestionIndex].question);
     setSelectedOption(null);
@@ -100,7 +99,7 @@ const PlayContainer = () => {
               disabled={nextButtonDisabled}
               onClick={() => handleButtonClick()}
             >
-              Next
+              {currentQuestionIndex + 1 === numberOfQuestions ? "End Game" : "Next"}
             </button>
             <button
               id="quit-button"
@@ -116,3 +115,9 @@ const PlayContainer = () => {
 };
 
 export default PlayContainer;
+
+
+// things to do
+// add breakpoints fix styles for tablet and mobile
+// add context api
+// add the option to chosse the hardship level of the questions

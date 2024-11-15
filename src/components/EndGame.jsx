@@ -5,10 +5,10 @@ const EndGame = ({ score, correctAnswers, wrongAnswers, numberOfQuestions }) => 
   return (
     <div id="end-game">
       <div className="endGame-section">
-        <h3>Quiz is finished</h3>
-        <h5>Your score is {score} out of {numberOfQuestions}</h5>
-        <h5>You have answered {correctAnswers} questions correctly.</h5>
-        <h5>And {wrongAnswers} questions wrong</h5>
+        <h1>Quiz is finished</h1>
+        <p>Your score is <spam className={score >= 6 ? "green" : "red"}>{score}</spam> out of {numberOfQuestions}
+        <br /> You have answered {correctAnswers} questions correctly and
+        <br /> {wrongAnswers} questions wrong</p>
         <div className="home-button-container">
           <a href="/" className="home-button">Go Back Home</a>
         </div>
