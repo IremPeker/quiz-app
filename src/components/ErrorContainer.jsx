@@ -1,4 +1,5 @@
 import React from "react";
+import GoBackHome from "./reusables/GoBackHome";
 import fail from "../assets/fail.webp";
 
 const ErrorContainer = () => {
@@ -10,11 +11,7 @@ const ErrorContainer = () => {
           correct it <br /> irem.peker@gmx.de
         </p>
         <img className="fail-message" src={fail} alt="fail"></img>
-        <div className="home-button-container">
-          <a className="home-button" href={`/`}>
-            Home Page
-          </a>
-        </div>
+        <GoBackHome />
       </div>
     </div>
   );

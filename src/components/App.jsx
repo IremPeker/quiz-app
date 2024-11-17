@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { fetchData } from "../utils/dataUtils";
+import { getRandomCategory, getRandomDifficulty } from "../utils/apiUtils";
 import { SnackbarProvider } from "notistack";
 import "../styles/App.scss";
 
@@ -25,17 +26,6 @@ const App = () => {
         });
     }
   }, [allQuestions.length]);
-
-  const getRandomCategory = () => {
-    const min = 9;
-    const max = 32;
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
-
-  const getRandomDifficulty = () => {
-    const difficulties = ["easy", "medium", "hard"];
-    return difficulties[Math.floor(Math.random() * difficulties.length)];
-  };
 
   return (
     <>

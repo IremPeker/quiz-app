@@ -1,4 +1,5 @@
 import React from "react";
+import GoBackHome from "./reusables/GoBackHome";
 
 const EndGame = ({
   score,
@@ -17,11 +18,7 @@ const EndGame = ({
           <br /> You have answered {correctAnswers} questions correctly and
           <br /> {wrongAnswers} questions wrong
         </p>
-        <div className="home-button-container">
-          <a href="/" className="home-button">
-            Go Back Home
-          </a>
-        </div>
+        <GoBackHome />
       </div>
     </div>
   );

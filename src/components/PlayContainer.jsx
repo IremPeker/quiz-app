@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useNavigate } from "react-router-dom";
 import { decodeEntities } from "../utils/stringUtils";
 import Score from "./Score";
 import EndGame from "./EndGame";
+import GoBackHome from "./reusables/GoBackHome";
 import PulseLoader from "react-spinners/PulseLoader";
 import { useSnackbar } from "notistack";
 
@@ -19,6 +20,8 @@ const PlayContainer = () => {
     setWrongAnswers,
   } = useOutletContext();
 
+  const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState(true);
   const [currentOptions, setCurrentOptions] = useState([]);
   const [correctAnswer, setCorrectAnswer] = useState(null);
@@ -28,6 +31,7 @@ const PlayContainer = () => {
   const [numberOfQuestions, setNumberOfQuestions] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [endGame, setEndGame] = useState(false);
+  const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
     if (allQuestions.length > 0 && !endGame) {
@@ -54,6 +58,12 @@ const PlayContainer = () => {
     }
   }, [allQuestions, currentQuestionIndex, endGame]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setShowButton(true);
+    }, 5000);
+  }, []);
+
   const handleOptionClick = (option) => {
     setSelectedOption(option);
     if (option === correctAnswer) {
@@ -74,9 +84,19 @@ const PlayContainer = () => {
     setSelectedOption(null);
   };
 
+  // const handleGoBackClick = () => {
+  //   navigate("/");
+  // };
+
   return isLoading ? (
     <div id="loader" className="loader-container">
       <PulseLoader color="#ffff" size={50} />
+      {showButton && (
+        <div className="go-back-message">
+          <h3>Took too long to load? :(</h3>
+          <GoBackHome />
+        </div>
+      )}
     </div>
   ) : endGame ? (
     <EndGame
@@ -133,4 +153,5 @@ export default PlayContainer;
 
 // things to do
 // add breakpoints fix styles for tablet and mobile
+// update readme
 // add tests
