@@ -10,7 +10,7 @@ const ErrorContainer = () => {
           Sorry! Something is wrong! <br /> Please contact with me so that I can
           correct it <br /> irem.peker@gmx.de
         </p>
-        <img className="fail-message" src={fail} alt="fail"></img>
+        <img className="fail-message" src={fail} alt="fail" />
         <GoBackHome />
       </div>
     </div>

@@ -250,6 +250,14 @@ $breakpoint-desktop: 1024px;
     .red {
       color: red;
     }
+
+    img.celebrate-giphy,
+    img.try-again-giphy {
+      @media (min-width: $breakpoint-tablet) {
+        height: 250px;
+        padding: 10px;
+      }
+    }
   }
 }
 
