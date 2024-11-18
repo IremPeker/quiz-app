@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useOutletContext, useNavigate } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import { decodeEntities } from "../utils/stringUtils";
 import Score from "./Score";
 import EndGame from "./EndGame";
@@ -19,8 +19,6 @@ const PlayContainer = () => {
     setCorrectAnswers,
     setWrongAnswers,
   } = useOutletContext();
-
-  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
   const [currentOptions, setCurrentOptions] = useState([]);
@@ -84,15 +82,11 @@ const PlayContainer = () => {
     setSelectedOption(null);
   };
 
-  // const handleGoBackClick = () => {
-  //   navigate("/");
-  // };
-
   return isLoading ? (
-    <div id="loader" className="loader-container">
+    <div data-testid="loaderContainer" id="loader" className="loader-container">
       <PulseLoader color="#ffff" size={50} />
       {showButton && (
-        <div className="go-back-message">
+        <div data-testid="goBackMessage" className="go-back-message">
           <h3>Took too long to load? :(</h3>
           <GoBackHome />
         </div>
@@ -110,16 +104,17 @@ const PlayContainer = () => {
       <div className="play-section">
         <Score />
         <div className="questions">
-          <h2>{currentQuestion}</h2>
+          <h2 data-testid="question">{currentQuestion}</h2>
           <p className="fraction">
             {currentQuestionIndex + 1}/{numberOfQuestions}
           </p>
-          <div className="options">
+          <div data-testid="options" className="options">
             {currentOptions.map((option, index) => {
               const decodedOption = decodeEntities(option);
               return (
                 <button
                   key={index}
+                  data-testid="option"
                   onClick={() => handleOptionClick(option)}
                   className={
                     selectedOption && selectedOption === decodedOption
@@ -132,14 +127,18 @@ const PlayContainer = () => {
               );
             })}
           </div>
-          <div className="button-container">
+          <div data-testid="buttons" className="button-container">
             <button
+              data-testid="next-button"
               id="next-button"
               disabled={currentQuestionIndex + 1 === numberOfQuestions}
               onClick={() => handleButtonClick()}>
               Next
             </button>
-            <button id="quit-button" onClick={() => setEndGame(true)}>
+            <button
+              data-testid="quit-button"
+              id="quit-button"
+              onClick={() => setEndGame(true)}>
               End Game
             </button>
           </div>
@@ -150,8 +149,3 @@ const PlayContainer = () => {
 };
 
 export default PlayContainer;
-
-// things to do
-// add breakpoints fix styles for tablet and mobile
-// update readme
-// add tests

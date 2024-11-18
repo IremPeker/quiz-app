@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
+    "@inrupt/jest-jsdom-polyfills": "^2.5.0",
     "@testing-library/user-event": "^13.5.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-fetch-mock": "^3.0.3",
     "notistack": "^3.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -25,6 +26,12 @@
       "react-app/jest"
     ]
   },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -38,6 +45,9 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.0.1",
+    "mutationobserver-shim": "^0.3.7",
     "react-app-rewired": "^2.2.1",
     "sass": "^1.69.5"
   }

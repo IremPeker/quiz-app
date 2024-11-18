@@ -4,7 +4,7 @@ import fail from "../assets/fail.webp";
 
 const ErrorContainer = () => {
   return (
-    <div id="error">
+    <div data-testid="errorContainer" id="error">
       <div className="error-section">
         <p className="error-message">
           Sorry! Something is wrong! <br /> Please contact with me so that I can
