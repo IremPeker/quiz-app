@@ -13,12 +13,13 @@ const App = () => {
   const [wrongAnswers, setWrongAnswers] = useState(0);
   const [error, setError] = useState(false);
   const [category, setCategory] = useState("");
-
-  const categoryNumber = getRandomCategory();
-  const difficulty = getRandomDifficulty();
+  const [difficulty, setDifficulty] = useState("");
 
   useEffect(() => {
     if (allQuestions.length === 0) {
+      const categoryNumber = getRandomCategory();
+      const difficulty = getRandomDifficulty();
+      setDifficulty(difficulty);
       fetchData(categoryNumber, difficulty)
         .then((data) => {
           setAllQuestions(data.results);
@@ -29,7 +30,7 @@ const App = () => {
           setError(true);
         });
     }
-  }, [allQuestions.length, categoryNumber, difficulty]);
+  }, [allQuestions.length, category, difficulty]);
 
   return (
     <>
