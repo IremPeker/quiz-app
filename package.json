@@ -1,5 +1,6 @@
 {
   "name": "quiz-app",
+  "homepage": "https://github.com/quiz-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -18,7 +19,9 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -47,6 +50,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.0.1",
+    "gh-pages": "^6.2.0",
     "mutationobserver-shim": "^0.3.7",
     "react-app-rewired": "^2.2.1",
     "sass": "^1.69.5"
