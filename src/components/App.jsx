@@ -12,10 +12,10 @@ const App = () => {
   const [wrongAnswers, setWrongAnswers] = useState(0);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    const category = getRandomCategory();
-    const difficulty = getRandomDifficulty();
+  const category = getRandomCategory();
+  const difficulty = getRandomDifficulty();
 
+  useEffect(() => {
     if (allQuestions.length === 0) {
       fetchData(category, difficulty)
         .then((data) => {
@@ -33,6 +33,8 @@ const App = () => {
         <Outlet
           context={{
             allQuestions,
+            category,
+            difficulty,
             score,
             setScore,
             correctAnswers,

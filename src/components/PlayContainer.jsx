@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { decodeEntities } from "../utils/stringUtils";
+import { shuffleAnswers } from "../utils/arrayUtils";
 import Score from "./Score";
 import EndGame from "./EndGame";
 import GoBackHome from "./reusables/GoBackHome";
@@ -12,6 +13,8 @@ const PlayContainer = () => {
 
   const {
     allQuestions,
+    category,
+    difficulty,
     score,
     setScore,
     correctAnswers,
@@ -31,6 +34,8 @@ const PlayContainer = () => {
   const [endGame, setEndGame] = useState(false);
   const [showButton, setShowButton] = useState(false);
 
+  console.log("play, category is", category, "difficulty is", difficulty);
+
   useEffect(() => {
     if (allQuestions.length > 0 && !endGame) {
       setIsLoading(false);
@@ -44,12 +49,7 @@ const PlayContainer = () => {
         allQuestions[currentQuestionIndex].incorrect_answers;
       const correctAnswer = allQuestions[currentQuestionIndex].correct_answer;
       setCorrectAnswer(correctAnswer);
-      const randomIndex = Math.floor(
-        Math.random() * incorrectAnswers.length + 1
-      );
-      const shuffledAnswers = incorrectAnswers
-        .slice(0, randomIndex)
-        .concat(correctAnswer, incorrectAnswers.slice(randomIndex));
+      const shuffledAnswers = shuffleAnswers(correctAnswer, incorrectAnswers);
       setCurrentOptions(
         shuffledAnswers.map((answer) => decodeEntities(answer))
       );
@@ -82,6 +82,24 @@ const PlayContainer = () => {
     setSelectedOption(null);
   };
 
+  const optionItem = currentOptions.map((option, index) => {
+    const decodedOption = decodeEntities(option);
+    return (
+      <button
+        key={index}
+        data-testid="option"
+        onClick={() => handleOptionClick(option)}
+        className={
+          selectedOption && selectedOption === decodedOption
+            ? "option not-clickable"
+            : "option"
+        }
+        disabled={selectedOption && selectedOption !== decodedOption}>
+        {decodedOption}
+      </button>
+    );
+  });
+
   return isLoading ? (
     <div data-testid="loaderContainer" id="loader" className="loader-container">
       <PulseLoader color="#ffff" size={50} />
@@ -109,23 +127,7 @@ const PlayContainer = () => {
             {currentQuestionIndex + 1}/{numberOfQuestions}
           </p>
           <div data-testid="options" className="options">
-            {currentOptions.map((option, index) => {
-              const decodedOption = decodeEntities(option);
-              return (
-                <button
-                  key={index}
-                  data-testid="option"
-                  onClick={() => handleOptionClick(option)}
-                  className={
-                    selectedOption && selectedOption === decodedOption
-                      ? "option not-clickable"
-                      : "option"
-                  }
-                  disabled={selectedOption && selectedOption !== decodedOption}>
-                  {decodedOption}
-                </button>
-              );
-            })}
+            {optionItem}
           </div>
           <div data-testid="buttons" className="button-container">
             <button

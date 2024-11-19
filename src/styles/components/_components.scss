@@ -3,6 +3,7 @@ $button-transition: 0.3s linear all;
 $button-hover-background-color: #1b59cca7;
 $green: #84b840;
 $green-hover: #65ad06;
+$breakpoint-mobile: 375px;
 $breakpoint-tablet: 620px;
 $breakpoint-desktop: 1024px;
 
@@ -251,11 +252,16 @@ $breakpoint-desktop: 1024px;
       color: red;
     }
 
-    img.celebrate-giphy,
-    img.try-again-giphy {
-      @media (min-width: $breakpoint-tablet) {
-        height: 250px;
-        padding: 10px;
+    .congrats,
+    .try-again {
+      text-align: center;
+      img.try-again-giphy,
+      img.celebrate-giphy {
+        margin-top: 20px;
+        @media (min-width: $breakpoint-mobile) and (max-width: $breakpoint-tablet) {
+          height: 150px;
+          padding: 10px;
+        }
       }
     }
   }

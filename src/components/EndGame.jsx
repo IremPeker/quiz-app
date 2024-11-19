@@ -20,7 +20,7 @@ const EndGame = ({
           <br /> You have answered {correctAnswers} questions correctly and
           <br /> {wrongAnswers} questions wrong
         </p>
-        {score > 2 ? (
+        {score >= 6 ? (
           <div data-testid="congrats" className="congrats">
             <h2>CONGRATULATIONS! You did it!</h2>
             <img
