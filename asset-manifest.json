@@ -1,28 +1,27 @@
 {
   "files": {
-    "main.css": "/quiz-app/static/css/main.c5e3a7df.chunk.css",
-    "main.js": "/quiz-app/static/js/main.9530a37d.chunk.js",
-    "main.js.map": "/quiz-app/static/js/main.9530a37d.chunk.js.map",
-    "runtime-main.js": "/quiz-app/static/js/runtime-main.4f483d45.js",
-    "runtime-main.js.map": "/quiz-app/static/js/runtime-main.4f483d45.js.map",
-    "static/css/2.5a510433.chunk.css": "/quiz-app/static/css/2.5a510433.chunk.css",
-    "static/js/2.ed019d29.chunk.js": "/quiz-app/static/js/2.ed019d29.chunk.js",
-    "static/js/2.ed019d29.chunk.js.map": "/quiz-app/static/js/2.ed019d29.chunk.js.map",
-    "index.html": "/quiz-app/index.html",
-    "precache-manifest.07aca8832aaf72cb253b70c34e0c0952.js": "/quiz-app/precache-manifest.07aca8832aaf72cb253b70c34e0c0952.js",
-    "service-worker.js": "/quiz-app/service-worker.js",
-    "static/css/2.5a510433.chunk.css.map": "/quiz-app/static/css/2.5a510433.chunk.css.map",
-    "static/css/main.c5e3a7df.chunk.css.map": "/quiz-app/static/css/main.c5e3a7df.chunk.css.map",
-    "static/js/2.ed019d29.chunk.js.LICENSE.txt": "/quiz-app/static/js/2.ed019d29.chunk.js.LICENSE.txt",
-    "static/media/fail.webp": "/quiz-app/static/media/fail.e3c65c50.webp",
-    "static/media/game.png": "/quiz-app/static/media/game.30eac6cc.png",
-    "static/media/App.scss": "/quiz-app/static/media/olav-ahrens-rotne-jvBXiynINGE-unsplash.4273b512.jpg"
+    "main.css": "/Inrupt/quiz-app/static/css/main.2bfa9de1.chunk.css",
+    "main.js": "/Inrupt/quiz-app/static/js/main.a571df1c.chunk.js",
+    "main.js.map": "/Inrupt/quiz-app/static/js/main.a571df1c.chunk.js.map",
+    "runtime-main.js": "/Inrupt/quiz-app/static/js/runtime-main.8e510e91.js",
+    "runtime-main.js.map": "/Inrupt/quiz-app/static/js/runtime-main.8e510e91.js.map",
+    "static/js/2.39c2aace.chunk.js": "/Inrupt/quiz-app/static/js/2.39c2aace.chunk.js",
+    "static/js/2.39c2aace.chunk.js.map": "/Inrupt/quiz-app/static/js/2.39c2aace.chunk.js.map",
+    "index.html": "/Inrupt/quiz-app/index.html",
+    "precache-manifest.3e6d130a8c51efaf508f09468513d5a5.js": "/Inrupt/quiz-app/precache-manifest.3e6d130a8c51efaf508f09468513d5a5.js",
+    "service-worker.js": "/Inrupt/quiz-app/service-worker.js",
+    "static/css/main.2bfa9de1.chunk.css.map": "/Inrupt/quiz-app/static/css/main.2bfa9de1.chunk.css.map",
+    "static/js/2.39c2aace.chunk.js.LICENSE.txt": "/Inrupt/quiz-app/static/js/2.39c2aace.chunk.js.LICENSE.txt",
+    "static/media/celebrate.webp": "/Inrupt/quiz-app/static/media/celebrate.4ccc92bf.webp",
+    "static/media/fail.webp": "/Inrupt/quiz-app/static/media/fail.e3c65c50.webp",
+    "static/media/game.png": "/Inrupt/quiz-app/static/media/game.9a0db46e.png",
+    "static/media/App.scss": "/Inrupt/quiz-app/static/media/olav-ahrens-rotne-jvBXiynINGE-unsplash.4273b512.jpg",
+    "static/media/try-again.webp": "/Inrupt/quiz-app/static/media/try-again.73380154.webp"
   },
   "entrypoints": [
-    "static/js/runtime-main.4f483d45.js",
-    "static/css/2.5a510433.chunk.css",
-    "static/js/2.ed019d29.chunk.js",
-    "static/css/main.c5e3a7df.chunk.css",
-    "static/js/main.9530a37d.chunk.js"
+    "static/js/runtime-main.8e510e91.js",
+    "static/js/2.39c2aace.chunk.js",
+    "static/css/main.2bfa9de1.chunk.css",
+    "static/js/main.a571df1c.chunk.js"
   ]
 }
