@@ -7,7 +7,7 @@ const HomeContainer = () => {
       <div className="home-section">
         <h1>Quiz Game</h1>
         <div className="instructions">
-          <p>
+          <p className="title">
             Each game has 10 questions.
             <br /> The category of question can vary from General Knowledge to
             Films, Musics and even Anime Charachters.
@@ -18,7 +18,7 @@ const HomeContainer = () => {
             src={game}
             className="game-screenshot"
             alt="example screenshot"></img>
-          <p>
+          <p className="title">
             Take your time! There is no time pressure :)
             <br />
             Click on "Start Game" and Enjoy!

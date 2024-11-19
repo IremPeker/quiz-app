@@ -5,12 +5,12 @@ const Score = () => {
   const { correctAnswers, wrongAnswers } = useOutletContext();
   return (
     <div data-testid="scoreContainer" className="score-container">
-      <div data-testid="scoreCorrect" className="score-correct">
-        <p>Correct Answers:</p>
+      <div data-testid="scoreCorrect" className="number-wrapper">
+        <p className="title">Correct Answers:</p>
         <p className="score-correct-number">{correctAnswers}</p>
       </div>
-      <div data-testid="scoreWrong" className="score-wrong">
-        <p>Wrong Answers:</p>
+      <div data-testid="scoreWrong" className="number-wrapper">
+        <p className="title">Wrong Answers:</p>
         <p className="score-wrong-number">{wrongAnswers}</p>
       </div>
     </div>

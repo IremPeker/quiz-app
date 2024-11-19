@@ -37,8 +37,16 @@ $breakpoint-desktop: 1024px;
 }
 
 @mixin score-container {
-  padding: 1px;
+  padding: 4px;
   margin-left: 5px;
+}
+
+@mixin white-rounded-background {
+  @include flex-row();
+  border-radius: 10px;
+  background-color: white;
+  padding: 10px;
+  margin: 10px;
 }
 
 #home,
@@ -68,6 +76,11 @@ $breakpoint-desktop: 1024px;
   margin-top: 25px;
 }
 
+.title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
 // HOME CONTAINER **************************************************
 
 #home {
@@ -87,11 +100,6 @@ $breakpoint-desktop: 1024px;
       font-size: 17px;
       width: 165px;
       line-height: 20px;
-
-      p {
-        font-size: 20px;
-        font-weight: 800;
-      }
 
       .game-screenshot {
         height: 100px;
@@ -133,7 +141,6 @@ $breakpoint-desktop: 1024px;
     .questions {
       display: flex;
       flex-direction: column;
-      padding: 50px;
 
       .fraction {
         text-align: center;
@@ -239,11 +246,6 @@ $breakpoint-desktop: 1024px;
     @include flex-center();
     flex-direction: column;
 
-    p {
-      font-size: 20px;
-      padding: 20px;
-    }
-
     .green {
       color: $green;
     }
@@ -272,28 +274,15 @@ $breakpoint-desktop: 1024px;
 .score-container {
   display: flex;
 
-  .score-correct,
-  .score-wrong {
-    @include flex-row();
-    border-radius: 10px;
-    background-color: white;
-    padding: 10px;
-    margin: 10px;
-
-    p {
-      font-size: 20px;
-      font-weight: 600;
-    }
+  .number-wrapper {
+    @include white-rounded-background();
   }
 
-  .score-correct {
+  .number-wrapper {
     .score-correct-number {
       @include score-container();
       color: $green;
     }
-  }
-
-  .score-wrong {
     .score-wrong-number {
       @include score-container();
       color: red;
@@ -313,6 +302,24 @@ $breakpoint-desktop: 1024px;
       background-color: darken($button-hover-background-color, 10%);
     }
   }
+}
+
+// GAME INFORMATION CONTAINER **************************************************
+
+.game-information {
+  .game-information-item {
+    @include white-rounded-background();
+    justify-content: center;
+    align-items: center;
+
+    .category,
+    .difficulty {
+      color: blue;
+      margin-left: 5px;
+    }
+  }
+
+  margin-bottom: 15px;
 }
 
 // LOADER

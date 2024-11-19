@@ -13,7 +13,7 @@ const EndGame = ({
     <div id="end-game">
       <div className="endGame-section">
         <h1>Quiz is finished</h1>
-        <p>
+        <p className="title">
           Your score is{" "}
           <spam className={score >= 6 ? "green" : "red"}>{score}</spam> out of{" "}
           {numberOfQuestions}

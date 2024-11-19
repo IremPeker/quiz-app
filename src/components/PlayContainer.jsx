@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { decodeEntities } from "../utils/stringUtils";
 import { shuffleAnswers } from "../utils/arrayUtils";
+import PulseLoader from "react-spinners/PulseLoader";
+import { useSnackbar } from "notistack";
 import Score from "./Score";
 import EndGame from "./EndGame";
 import GoBackHome from "./reusables/GoBackHome";
-import PulseLoader from "react-spinners/PulseLoader";
-import { useSnackbar } from "notistack";
+import GameInformation from "./GameInformation";
 
 const PlayContainer = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -34,8 +35,6 @@ const PlayContainer = () => {
   const [endGame, setEndGame] = useState(false);
   const [showButton, setShowButton] = useState(false);
 
-  console.log("play, category is", category, "difficulty is", difficulty);
-
   useEffect(() => {
     if (allQuestions.length > 0 && !endGame) {
       setIsLoading(false);
@@ -45,10 +44,14 @@ const PlayContainer = () => {
       setNumberOfQuestions(allQuestions.length);
       setCurrentQuestion(decodeEntities(currentQuestion));
 
+      // incorrect answers array
       const incorrectAnswers =
         allQuestions[currentQuestionIndex].incorrect_answers;
+      // correct answer
       const correctAnswer = allQuestions[currentQuestionIndex].correct_answer;
       setCorrectAnswer(correctAnswer);
+
+      //concat and shuffle answers
       const shuffledAnswers = shuffleAnswers(correctAnswer, incorrectAnswers);
       setCurrentOptions(
         shuffledAnswers.map((answer) => decodeEntities(answer))
@@ -120,6 +123,7 @@ const PlayContainer = () => {
   ) : (
     <div id="play">
       <div className="play-section">
+        <GameInformation category={category} difficulty={difficulty} />
         <Score />
         <div className="questions">
           <h2 data-testid="question">{currentQuestion}</h2>
