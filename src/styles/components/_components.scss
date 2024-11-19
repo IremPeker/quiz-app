@@ -125,7 +125,7 @@ $breakpoint-desktop: 1024px;
     .play-button {
       @include button-props();
       &:hover {
-        background-color: darken($button-hover-background-color, 10%);
+        background-color: $button-hover-background-color;
       }
     }
   }
@@ -178,7 +178,7 @@ $breakpoint-desktop: 1024px;
           text-align: center;
 
           &:hover {
-            background-color: darken($green-hover, 10%);
+            background-color: $green-hover;
           }
 
           @media (min-width: $breakpoint-tablet) {
@@ -206,7 +206,7 @@ $breakpoint-desktop: 1024px;
           margin: 5px;
 
           &:hover {
-            background-color: darken($button-hover-background-color, 10%);
+            background-color: $button-hover-background-color;
           }
         }
 
@@ -299,7 +299,7 @@ $breakpoint-desktop: 1024px;
     @include button-props();
 
     &:hover {
-      background-color: darken($button-hover-background-color, 10%);
+      background-color: $button-hover-background-color;
     }
   }
 }

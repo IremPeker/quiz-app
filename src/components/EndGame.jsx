@@ -15,7 +15,7 @@ const EndGame = ({
         <h1>Quiz is finished</h1>
         <p className="title">
           Your score is{" "}
-          <spam className={score >= 6 ? "green" : "red"}>{score}</spam> out of{" "}
+          <span className={score >= 6 ? "green" : "red"}>{score}</span> out of{" "}
           {numberOfQuestions}
           <br /> You have answered {correctAnswers} questions correctly and
           <br /> {wrongAnswers} questions wrong

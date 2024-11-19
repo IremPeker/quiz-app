@@ -10,7 +10,7 @@ import * as serviceWorker from "./serviceWorker";
 const router = createBrowserRouter(
   [
     {
-      path: "/",
+      path: "/quiz-app",
       element: <App />,
       errorElement: <ErrorContainer />,
       children: [

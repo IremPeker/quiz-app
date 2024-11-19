@@ -25,7 +25,7 @@ const HomeContainer = () => {
           </p>
         </div>
         <div className="play-button-container">
-          <a href="/play" className="play-button">
+          <a href="/quiz-app/play" className="play-button">
             Start Game
           </a>
         </div>

@@ -64,12 +64,12 @@ describe("Play container renders loader container and goBack message", () => {
   it("should render loader container", () => {
     expect(screen.getByTestId("loaderContainer")).toBeInTheDocument();
   });
-  it("should render goBack message if there is no data after 5 seconds", async () => {
+  it("should render goBack message if there is no data after 6 seconds", async () => {
     await waitFor(
       () => {
         expect(screen.getByTestId("goBackMessage")).toBeInTheDocument();
       },
-      { timeout: 6000 }
+      { timeout: 7000 }
     );
   }, 7000);
 });

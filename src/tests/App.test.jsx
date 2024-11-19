@@ -1,5 +1,5 @@
 import fetchMock from "jest-fetch-mock";
-import { fetchData } from "../utils/dataUtils";
+import { fetchWithDelay } from "../utils/dataUtils";
 import { mockedData } from "../mocks/mockUtils";
 
 beforeEach(() => {
@@ -16,7 +16,7 @@ afterEach(() => {
 describe("App", () => {
   test("1. Data is fetched correctly", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(mockedData));
-    const data = await fetchData(9, "easy");
+    const data = await fetchWithDelay(9, "easy");
     expect(data).toEqual(mockedData);
   });
 });
