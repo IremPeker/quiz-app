@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { fetchWithDelay } from "../utils/dataUtils";
+import { fetchData } from "../utils/dataUtils";
 import { getRandomCategory, getRandomDifficulty } from "../utils/apiUtils";
 import { decodeEntities } from "../utils/stringUtils";
 import { SnackbarProvider } from "notistack";
@@ -14,25 +14,23 @@ const App = () => {
   const [error, setError] = useState(false);
   const [category, setCategory] = useState("");
   const [difficulty, setDifficulty] = useState("");
-  const [dataFetched, setDataFetched] = useState(false);
 
   useEffect(() => {
-    if (!dataFetched) {
+    if (!allQuestions.length && !error) {
       const categoryNumber = getRandomCategory();
       const difficulty = getRandomDifficulty();
       setDifficulty(difficulty);
-      fetchWithDelay(categoryNumber, difficulty)
+      fetchData(categoryNumber, difficulty)
         .then((data) => {
           setAllQuestions(data.results);
           const decodedCategory = decodeEntities(data.results[0].category);
           setCategory(decodedCategory);
-          setDataFetched(true);
         })
         .catch((error) => {
           setError(true);
         });
     }
-  }, [category, difficulty]);
+  }, []);
 
   return (
     <>

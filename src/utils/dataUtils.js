@@ -1,6 +1,4 @@
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const fetchData = async (category, difficulty) => {
+export const fetchData = async (category, difficulty) => {
   const url = `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`;
 
   try {
@@ -15,9 +13,4 @@ const fetchData = async (category, difficulty) => {
     console.error("Error during fetch:", error);
     return null;
   }
-};
-
-export const fetchWithDelay = async (category, difficulty) => {
-  await delay(5000);
-  return fetchData(category, difficulty);
 };
