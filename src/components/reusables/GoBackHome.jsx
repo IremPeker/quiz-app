@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const GoBackHome = () => {
   return (
     <div className="back-home-button-container">
-      <a className="back-home-button" href="/quiz-app/">
+      <Link to="/" className="back-home-button">
         Home Page
-      </a>
+      </Link>
     </div>
   );
 };

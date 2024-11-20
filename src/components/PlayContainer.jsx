@@ -62,7 +62,7 @@ const PlayContainer = () => {
   useEffect(() => {
     setTimeout(() => {
       setShowButton(true);
-    }, 6000);
+    }, 5000);
   }, []);
 
   const handleOptionClick = (option) => {

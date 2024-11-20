@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import game from "../assets/game.png";
 
 const HomeContainer = () => {
@@ -25,9 +26,9 @@ const HomeContainer = () => {
           </p>
         </div>
         <div className="play-button-container">
-          <a href="/quiz-app/play" className="play-button">
+          <Link to="/play" className="play-button">
             Start Game
-          </a>
+          </Link>
         </div>
       </div>
     </div>

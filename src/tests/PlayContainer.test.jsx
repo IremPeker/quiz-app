@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import PlayContainer from "../components/PlayContainer";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, MemoryRouter } from "react-router-dom";
 import { mockedData } from "../mocks/mockUtils";
 
 jest.mock("react-router-dom", () => ({
@@ -24,7 +24,11 @@ describe("PlayContainer renders correctly", () => {
       setCorrectAnswers: jest.fn(),
       setWrongAnswers: jest.fn(),
     });
-    render(<PlayContainer />);
+    render(
+      <MemoryRouter initialEntries={["/play"]}>
+        <PlayContainer />
+      </MemoryRouter>
+    );
   });
   it("should render the scoreContainer and question", () => {
     expect(screen.getByTestId("scoreContainer")).toBeInTheDocument();
@@ -59,17 +63,21 @@ describe("Play container renders loader container and goBack message", () => {
       setCorrectAnswers: jest.fn(),
       setWrongAnswers: jest.fn(),
     });
-    render(<PlayContainer />);
+    render(
+      <MemoryRouter initialEntries={["/play"]}>
+        <PlayContainer />
+      </MemoryRouter>
+    );
   });
   it("should render loader container", () => {
     expect(screen.getByTestId("loaderContainer")).toBeInTheDocument();
   });
-  it("should render goBack message if there is no data after 6 seconds", async () => {
+  it("should render goBack message if there is no data after 5 seconds", async () => {
     await waitFor(
       () => {
         expect(screen.getByTestId("goBackMessage")).toBeInTheDocument();
       },
-      { timeout: 7000 }
+      { timeout: 6000 }
     );
   }, 7000);
 });

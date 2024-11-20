@@ -10,7 +10,7 @@ import * as serviceWorker from "./serviceWorker";
 const router = createBrowserRouter(
   [
     {
-      path: "/quiz-app",
+      path: "/",
       element: <App />,
       errorElement: <ErrorContainer />,
       children: [
@@ -26,6 +26,7 @@ const router = createBrowserRouter(
     },
   ],
   {
+    basename: "/quiz-app",
     future: {
       v7_startTransition: true,
       v7_relativeSplatPath: true,
