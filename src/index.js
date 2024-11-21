@@ -5,6 +5,7 @@ import App from "./components/App";
 import HomeContainer from "./components/HomeContainer";
 import PlayContainer from "./components/PlayContainer";
 import ErrorContainer from "./components/ErrorContainer";
+import EndGame from "./components/EndGame";
 import * as serviceWorker from "./serviceWorker";
 
 const router = createBrowserRouter(
@@ -21,6 +22,10 @@ const router = createBrowserRouter(
         {
           path: "play",
           element: <PlayContainer />,
+        },
+        {
+          path: "score",
+          element: <EndGame />,
         },
       ],
     },

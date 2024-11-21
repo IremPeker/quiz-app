@@ -24,3 +24,11 @@ fetchMock.enableMocks();
 beforeEach(() => {
   fetchMock.resetMocks();
 });
+
+beforeAll(() => {
+  jest.spyOn(console, "warn").mockImplementation(() => {});
+});
+
+afterAll(() => {
+  console.warn.mockRestore();
+});

@@ -46,7 +46,7 @@ describe("PlayContainer renders correctly", () => {
     const buttonsContainer = screen.getByTestId("buttons");
     expect(buttonsContainer).toBeInTheDocument();
     const nextButton = screen.getByTestId("next-button");
-    const quitButton = screen.getByTestId("quit-button");
+    const quitButton = screen.getByTestId("end-game");
     expect(nextButton).toBeInTheDocument();
     expect(quitButton).toBeInTheDocument();
   });

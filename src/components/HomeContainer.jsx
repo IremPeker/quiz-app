@@ -1,8 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
+import PulseLoader from "react-spinners/PulseLoader";
 import game from "../assets/game.png";
 
 const HomeContainer = () => {
+  const { allQuestions } = useOutletContext();
+
   return (
     <div id="home">
       <div className="home-section">
@@ -25,11 +28,15 @@ const HomeContainer = () => {
             Click on "Start Game" and Enjoy!
           </p>
         </div>
-        <div className="play-button-container">
-          <Link to="/play" className="play-button">
-            Start Game
-          </Link>
-        </div>
+        {allQuestions.length > 0 ? (
+          <div className="play-button-container">
+            <Link to="/play" className="play-button">
+              Start Game
+            </Link>
+          </div>
+        ) : (
+          <PulseLoader color="#ffff" size={50} />
+        )}
       </div>
     </div>
   );

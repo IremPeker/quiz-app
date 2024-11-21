@@ -23,6 +23,7 @@ $breakpoint-desktop: 1024px;
   transition: $button-transition;
   text-decoration: none;
   outline: none;
+  text-align: center;
 }
 
 @mixin flex-center {
@@ -47,6 +48,16 @@ $breakpoint-desktop: 1024px;
   background-color: white;
   padding: 10px;
   margin: 10px;
+}
+
+a {
+  @include button-props();
+  width: 100px;
+  margin: 5px;
+
+  &:hover {
+    background-color: $button-hover-background-color;
+  }
 }
 
 #home,
@@ -98,8 +109,6 @@ $breakpoint-desktop: 1024px;
       text-align: center;
       margin-bottom: 20px;
       font-size: 17px;
-      width: 165px;
-      line-height: 20px;
 
       .game-screenshot {
         height: 100px;
@@ -141,6 +150,10 @@ $breakpoint-desktop: 1024px;
     .questions {
       display: flex;
       flex-direction: column;
+
+      .question {
+        font-size: 17px;
+      }
 
       .fraction {
         text-align: center;
@@ -254,17 +267,19 @@ $breakpoint-desktop: 1024px;
       color: red;
     }
 
-    .congrats,
-    .try-again {
+    .end-game-wrapper {
       text-align: center;
-      img.try-again-giphy,
-      img.celebrate-giphy {
+      img.end-game-giphy {
         margin-top: 20px;
         @media (min-width: $breakpoint-mobile) and (max-width: $breakpoint-tablet) {
           height: 150px;
           padding: 10px;
         }
       }
+    }
+
+    .end-game-message {
+      margin-top: 20px;
     }
   }
 }
@@ -294,14 +309,6 @@ $breakpoint-desktop: 1024px;
 
 .back-home-button-container {
   margin-top: 30px;
-
-  a.back-home-button {
-    @include button-props();
-
-    &:hover {
-      background-color: $button-hover-background-color;
-    }
-  }
 }
 
 // GAME INFORMATION CONTAINER **************************************************
@@ -309,8 +316,7 @@ $breakpoint-desktop: 1024px;
 .game-information {
   .game-information-item {
     @include white-rounded-background();
-    justify-content: center;
-    align-items: center;
+    align-items: baseline;
 
     .category,
     .difficulty {

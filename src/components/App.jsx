@@ -8,6 +8,7 @@ import "../styles/App.scss";
 
 const App = () => {
   const [allQuestions, setAllQuestions] = useState([]);
+  const [numberOfQuestions, setNumberOfQuestions] = useState(0);
   const [score, setScore] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
@@ -16,13 +17,14 @@ const App = () => {
   const [difficulty, setDifficulty] = useState("");
 
   useEffect(() => {
-    if (!allQuestions.length && !error) {
+    if (!allQuestions.length) {
       const categoryNumber = getRandomCategory();
       const difficulty = getRandomDifficulty();
       setDifficulty(difficulty);
       fetchData(categoryNumber, difficulty)
         .then((data) => {
           setAllQuestions(data.results);
+          setNumberOfQuestions(data.results.length);
           const decodedCategory = decodeEntities(data.results[0].category);
           setCategory(decodedCategory);
         })
@@ -30,14 +32,27 @@ const App = () => {
           setError(true);
         });
     }
-  }, []);
+  }, [allQuestions.length]);
+
+  const handleEndGame = () => {
+    setAllQuestions([]);
+    setScore(0);
+    setCorrectAnswers(0);
+    setWrongAnswers(0);
+  };
 
   return (
     <>
-      <SnackbarProvider autoHideDuration={2000}>
+      <SnackbarProvider
+        autoHideDuration={2000}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}>
         <Outlet
           context={{
             allQuestions,
+            numberOfQuestions,
             category,
             difficulty,
             score,
@@ -47,6 +62,7 @@ const App = () => {
             wrongAnswers,
             setWrongAnswers,
             error,
+            handleEndGame,
           }}
         />
       </SnackbarProvider>
